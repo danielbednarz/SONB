@@ -4,23 +4,41 @@ namespace SONB
 {
     public class Server
     {
-        public static void StartMasterServerWithCorrectMessage(BlockingCollection<int[]> collection)
+        public static void StartMasterServer(BlockingCollection<int[]> collection, ExceptionType exceptionType)
         {
             Console.WriteLine("Serwer nadzorujący wystartował...");
-
             Console.WriteLine($"Wysyłam informację");
-            for (int i = 0; i < 6; i++)
+            Console.Clear();
+
+            switch (exceptionType)
+            {
+                case ExceptionType.NoException:
+                    AddCorrectMessage(collection);
+                    break;
+                case ExceptionType.IncorrectMessage:
+                    AddNullMessage(collection);
+                    break;
+                case ExceptionType.EmptyMessage:
+                    AddMissingMessage(collection);
+                    break;
+                default:
+                    return;
+            };
+
+            StartServers(collection);
+        }
+
+        private static void AddCorrectMessage(BlockingCollection<int[]> collection)
+        {
+            for (int i = 0; i < 7; i++)
             {
                 int[] correctInfo = { 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1, 0 };
                 collection.Add(correctInfo);
             }
         }
 
-        public static void StartMasterServerWithNullMessage(BlockingCollection<int[]> collection)
+        private static void AddNullMessage(BlockingCollection<int[]> collection)
         {
-            Console.WriteLine("Serwer nadzorujący wystartował...");
-
-            Console.WriteLine($"Wysyłam informację");
             for (int i = 0; i < 6; i++)
             {
                 int[] correctInfo = { 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1, 0 };
@@ -30,7 +48,16 @@ namespace SONB
             collection.Add(null);
         }
 
-        public static void StartServers(BlockingCollection<int[]> collection)
+        private static void AddMissingMessage(BlockingCollection<int[]> collection)
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                int[] correctInfo = { 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1, 0 };
+                collection.Add(correctInfo);
+            }
+        }
+
+        private static void StartServers(BlockingCollection<int[]> collection)
         {
             List<Thread> watki = new List<Thread>();
 
@@ -42,6 +69,11 @@ namespace SONB
 
                     if (collection.TryTake(out int[] res))
                     {
+                        if (res == null)
+                        {
+                            Console.WriteLine("Blad, wartosc nie moze byc nullem");
+                            return;
+                        }
                         Console.WriteLine($"Odbieram {string.Join("", res)} ");
                     }
                     else
@@ -57,6 +89,10 @@ namespace SONB
             {
                 watek.Join();
             }
+
+            Console.WriteLine("Naciśnij klawisz, żeby kontynuować...");
+            Console.ReadKey();
+            Console.Clear();
         }
     }
 }
