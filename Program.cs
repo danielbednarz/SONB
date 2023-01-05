@@ -7,7 +7,7 @@ namespace AnotherImpl
     {
         static void Main(string[] args)
         {
-            BlockingCollection<int[]> collection = new();
+            BlockingCollection<string> collection = new();
 
             bool showMenu = true;
             while (showMenu)
