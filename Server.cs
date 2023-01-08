@@ -23,9 +23,9 @@ namespace SONB
                 case ExceptionType.IncorrectMessage:
                     SendErrorMessageToRandomServer(collection);
                     break;
-                //case ExceptionType.EmptyMessage:
-                //    AddMissingMessage(collection);
-                //    break;
+                case ExceptionType.EmptyMessage:
+                    AddMissingMessage(collection);
+                    break;
                 default:
                     return;
             };
@@ -84,14 +84,19 @@ namespace SONB
         //    collection.Add(null);
         //}
 
-        //private static void AddMissingMessage(BlockingCollection<string[]> collection)
-        //{
-        //    for (int i = 0; i < 6; i++)
-        //    {
-        //        int[] correctInfo = { 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1, 0 };
-        //        collection.Add(correctInfo);
-        //    }
-        //}
+        private static void AddMissingMessage(BlockingCollection<string> collection)
+        {
+            var code = Helpers.prettyStringToBoolArray(codeString);
+            var encoded = Hamming.Encode(code);
+
+            Console.WriteLine($"Serwer nadzorujacy - Message to encode: {Helpers.boolArrayToPrettyString(code)}");
+            Console.WriteLine($"Serwer nadzorujacy - Encoded message: {Helpers.boolArrayToPrettyString(encoded)}");
+
+            for (int i = 0; i < 6; i++)
+            {
+                collection.Add(Helpers.boolArrayToPrettyString(encoded));
+            }
+        }
 
         private static void StartServers(BlockingCollection<string> collection)
         {

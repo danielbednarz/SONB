@@ -8,7 +8,7 @@ namespace SONB
         public static bool DisplayMenu(BlockingCollection<string> collection)
         {
             Console.WriteLine("1. Wyslij prawidłową wiadomosc do serwerów");
-            Console.WriteLine("2. Wyslij nieprawidlowa wiadomosc do serwera");
+            Console.WriteLine("2. Wyslij nieprawidłową wiadomosc do losowego serwera");
             Console.WriteLine("3. Wyslij mniejszą liczbę wiadomości");
             Console.WriteLine("0. Koniec");
 
