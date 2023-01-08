@@ -10,6 +10,7 @@ namespace SONB
             Console.WriteLine("1. Wyslij prawidłową wiadomosc do serwerów");
             Console.WriteLine("2. Wyslij nieprawidłową wiadomosc do losowego serwera");
             Console.WriteLine("3. Wyslij mniejszą liczbę wiadomości");
+            Console.WriteLine("4. Wyslij null");
             Console.WriteLine("0. Koniec");
 
             switch (Console.ReadLine())
@@ -22,6 +23,9 @@ namespace SONB
                     return true;
                 case "3":
                     Server.StartMasterServer(collection, ExceptionType.EmptyMessage);
+                    return true;
+                case "4":
+                    Server.StartMasterServer(collection, ExceptionType.NullMessage);
                     return true;
                 case "0":
                     return false;
