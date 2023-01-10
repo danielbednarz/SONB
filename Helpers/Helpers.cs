@@ -1,4 +1,6 @@
-﻿namespace SONB
+﻿using System.Collections.Concurrent;
+
+namespace SONB
 {
     public class Helpers
     {
@@ -35,5 +37,22 @@
                 .Select(x => vector[x - 1])
                 .Aggregate((x, y) => x ^ y);
         }
+
+        public static void ClearCollection(BlockingCollection<string> collection)
+        {
+            while (collection.TryTake(out _)) { }
+        }
+
+        public static bool[] GetEncodedCodeToSend(string codeString)
+        {
+            var code = prettyStringToBoolArray(codeString);
+            var encoded = Hamming.Encode(code);
+
+            Console.WriteLine($"Serwer nadzorujacy - Wiadomość do zakodowania: {boolArrayToPrettyString(code)}");
+            Console.WriteLine($"Serwer nadzorujacy - Zakodowana wiadomość: {boolArrayToPrettyString(encoded)}\n");
+
+            return encoded;
+        }
+
     }
 }
