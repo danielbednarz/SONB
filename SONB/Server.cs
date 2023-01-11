@@ -1,11 +1,16 @@
 ﻿using System.Collections.Concurrent;
+using static SONB.Hamming;
 
 namespace SONB
 {
     public class Server
     {
-        public static void StartMasterServer(BlockingCollection<int[]> collection, ExceptionType exceptionType)
+        static readonly string codeString = "1011001010110010";
+        static readonly Random rnd = new();
+        public static void StartMasterServer(BlockingCollection<string> collection, ExceptionType exceptionType)
         {
+            Helpers.ClearCollection(collection);
+
             Console.WriteLine("Serwer nadzorujący wystartował...");
             Console.WriteLine($"Wysyłam informację");
             Console.Clear();
@@ -13,13 +18,16 @@ namespace SONB
             switch (exceptionType)
             {
                 case ExceptionType.NoException:
-                    AddCorrectMessage(collection);
+                    SendCorrectMessageToAllServer(collection);
                     break;
                 case ExceptionType.IncorrectMessage:
-                    AddNullMessage(collection);
+                    SendErrorMessageToRandomServer(collection);
                     break;
                 case ExceptionType.EmptyMessage:
                     AddMissingMessage(collection);
+                    break;
+                case ExceptionType.NullMessage:
+                    AddNullMessage(collection);
                     break;
                 default:
                     return;
@@ -28,38 +36,69 @@ namespace SONB
             StartServers(collection);
         }
 
-        private static void AddCorrectMessage(BlockingCollection<int[]> collection)
+        private static void SendCorrectMessageToAllServer(BlockingCollection<string> collection)
         {
+            var encoded = Helpers.GetEncodedCodeToSend(codeString);
+
             for (int i = 0; i < 7; i++)
             {
-                int[] correctInfo = { 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1, 0 };
-                collection.Add(correctInfo);
+                collection.Add(Helpers.boolArrayToPrettyString(encoded));
             }
         }
 
-        private static void AddNullMessage(BlockingCollection<int[]> collection)
+        private static void SendErrorMessageToRandomServer(BlockingCollection<string> collection)
         {
+            var errorPosition = rnd.Next(1, 22);
+            var code = Helpers.prettyStringToBoolArray(codeString);
+            var encoded = Hamming.Encode(code);
+            var encodedError = Hamming.Encode(code);
+
+            Console.WriteLine($"Serwer nadzorujacy - Wiadomość do zakodowania: {Helpers.boolArrayToPrettyString(code)}");
+            Console.WriteLine($"Serwer nadzorujacy - Zakodowana wiadomość: {Helpers.boolArrayToPrettyString(encoded)}");
+            MixinSingleError(encodedError, errorPosition);
+            Console.WriteLine($"Serwer nadzorujacy - Wiadomość z błędem:   {Helpers.boolArrayToPrettyString(encodedError)} ({errorPosition - 1})");
+
+            int loss = rnd.Next(7);
+            Console.WriteLine($"Serwer nadzorujacy - Błąd zostanie wysłany do losowego serwera\n");
+
+            for (int i = 0; i < 7; i++)
+            {
+                if (loss == i)
+                    collection.Add(Helpers.boolArrayToPrettyString(encodedError));
+                collection.Add(Helpers.boolArrayToPrettyString(encoded));
+            }
+        }
+
+        private static void AddNullMessage(BlockingCollection<string> collection)
+        {
+            var encoded = Helpers.GetEncodedCodeToSend(codeString);
+            var randomError = rnd.Next(7);
+
+            for (int i = 0; i < 7; i++)
+            {
+                collection.Add(Helpers.boolArrayToPrettyString(encoded));
+                if (i == randomError)
+                {
+                    // dodanie wiadomosci null
+                    collection.Add(null);
+                }
+            }
+
+        }
+
+        private static void AddMissingMessage(BlockingCollection<string> collection)
+        {
+            var encoded = Helpers.GetEncodedCodeToSend(codeString);
+
             for (int i = 0; i < 6; i++)
             {
-                int[] correctInfo = { 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1, 0 };
-                collection.Add(correctInfo);
-            }
-            // dodanie wiadomosci null
-            collection.Add(null);
-        }
-
-        private static void AddMissingMessage(BlockingCollection<int[]> collection)
-        {
-            for (int i = 0; i < 6; i++)
-            {
-                int[] correctInfo = { 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1, 0 };
-                collection.Add(correctInfo);
+                collection.Add(Helpers.boolArrayToPrettyString(encoded));
             }
         }
 
-        private static void StartServers(BlockingCollection<int[]> collection)
+        private static void StartServers(BlockingCollection<string> collection)
         {
-            List<Thread> watki = new List<Thread>();
+            List<Thread> watki = new();
 
             for (int i = 0; i < 7; i++)
             {
@@ -67,21 +106,40 @@ namespace SONB
                 {
                     Thread.Sleep(1000);
 
-                    if (collection.TryTake(out int[] res))
+                    if (collection.TryTake(out string res))
                     {
                         if (res == null)
                         {
-                            Console.WriteLine("Blad, wartosc nie moze byc nullem");
+                            Console.WriteLine($"! {Thread.CurrentThread.Name} - Błąd, wartość nie może być nullem");
                             return;
                         }
-                        Console.WriteLine($"Odbieram {string.Join("", res)} ");
+
+                        var encoded = Helpers.prettyStringToBoolArray(res);
+
+                        Console.WriteLine($"{Thread.CurrentThread.Name} - Otrzymano zakodowaną wiadomość: {Helpers.boolArrayToPrettyString(encoded)}");
+
+                        int calculatedErrorPosition = ErrorSyndrome(encoded);
+                        if (calculatedErrorPosition != 0)
+                        {
+                            Console.WriteLine($"! {Thread.CurrentThread.Name} - Błąd na pozycji: {calculatedErrorPosition}");
+                            encoded[calculatedErrorPosition - 1] = !encoded[calculatedErrorPosition - 1];
+                            Console.WriteLine($"! {Thread.CurrentThread.Name} - Błąd naprawiony");
+                        }
+
+                        var decoded = Decode(encoded);
+                        Console.WriteLine($"{Thread.CurrentThread.Name} - Wiadomość po odkodowaniu: {Helpers.boolArrayToPrettyString(decoded)}");
+
+                        Console.WriteLine(Enumerable.SequenceEqual(Helpers.prettyStringToBoolArray(codeString), decoded) ? $"{Thread.CurrentThread.Name} - Wiadomości są takie same!" : $"{Thread.CurrentThread.Name} - Wiadomości są różne!");
+
                     }
                     else
                     {
-                        Console.WriteLine("Brak wiadomości do pobrania");
+                        Console.WriteLine($"! {Thread.CurrentThread.Name} - Brak wiadomości do pobrania");
                     }
 
                 });
+
+                watek.Name = "Serwer" + i;
                 watki.Add(watek);
                 watek.Start();
             }
@@ -94,5 +152,6 @@ namespace SONB
             Console.ReadKey();
             Console.Clear();
         }
+
     }
 }
