@@ -37,6 +37,7 @@
             this.btnSend = new System.Windows.Forms.Button();
             this.lstClientIP = new System.Windows.Forms.ListBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.labelMessage = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -122,11 +123,22 @@
             this.label3.Text = "Client IP:";
             this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
+            // labelMessage
+            // 
+            this.labelMessage.AutoSize = true;
+            this.labelMessage.Location = new System.Drawing.Point(74, 528);
+            this.labelMessage.Name = "labelMessage";
+            this.labelMessage.Size = new System.Drawing.Size(103, 15);
+            this.labelMessage.TabIndex = 9;
+            this.labelMessage.Text = "1011001010110010";
+            this.labelMessage.Click += new System.EventHandler(this.label4_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(845, 556);
+            this.Controls.Add(this.labelMessage);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.lstClientIP);
             this.Controls.Add(this.btnSend);
@@ -157,5 +169,6 @@
         private Button btnSend;
         private ListBox lstClientIP;
         private Label label3;
+        private Label labelMessage;
     }
 }

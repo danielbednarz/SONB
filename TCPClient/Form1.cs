@@ -1,4 +1,6 @@
+using SONB;
 using SuperSimpleTcp;
+using System.Drawing.Imaging;
 using System.Text;
 
 namespace TCPClient
@@ -44,7 +46,7 @@ namespace TCPClient
         {
             this.Invoke((MethodInvoker)delegate
             {
-                txtInfo.Text += $"Server disconnected. {Environment.NewLine}";
+                txtInfo.Text += $"Roz³¹czono z serwerem. {Environment.NewLine}";
             });
         }
 
@@ -52,7 +54,21 @@ namespace TCPClient
         {
             this.Invoke((MethodInvoker)delegate
             {
-                txtInfo.Text += $"{e.IpPort}: {Encoding.UTF8.GetString(e.Data)}{Environment.NewLine}";
+                var message = Encoding.UTF8.GetString(e.Data);
+                txtInfo.Text += $"{e.IpPort} Otrzymano zakodowan¹ wiadomoœæ: {message}{Environment.NewLine}";
+                var encoded = Helpers.prettyStringToBoolArray(message);
+                int calculatedErrorPosition = SONB.Hamming.ErrorSyndrome(encoded);
+                if (calculatedErrorPosition != 0)
+                {
+                    txtInfo.Text += $"! {Thread.CurrentThread.Name} - B³¹d na pozycji: {calculatedErrorPosition}{Environment.NewLine}";
+                    encoded[calculatedErrorPosition - 1] = !encoded[calculatedErrorPosition - 1];
+                    Console.WriteLine($"! {Thread.CurrentThread.Name} - B³¹d naprawiony");
+                }
+
+                var decoded = SONB.Hamming.Decode( encoded );
+            txtInfo.Text += $"{Thread.CurrentThread.Name} - Wiadomoœæ po odkodowaniu: {Helpers.boolArrayToPrettyString(decoded)}{Environment.NewLine}";
+
+            txtInfo.Text += Enumerable.SequenceEqual(Helpers.prettyStringToBoolArray(SONB.Helpers.codeString), decoded) ? $"{Thread.CurrentThread.Name} - Wiadomoœci s¹ takie same!" : $"{Thread.CurrentThread.Name} - Wiadomoœci s¹ ró¿ne!{Environment.NewLine}";
             });
         }
 
@@ -60,7 +76,7 @@ namespace TCPClient
         {
             this.Invoke((MethodInvoker)delegate
             {
-                txtInfo.Text += $"Server connected. {Environment.NewLine}";
+                txtInfo.Text += $"Po³¹czono z serwerem. {Environment.NewLine}";
             });
         }
 
@@ -71,7 +87,7 @@ namespace TCPClient
                 if(!string.IsNullOrEmpty(txtMessage.Text))
                 {
                     client.Send(txtMessage.Text);
-                    txtInfo.Text += $"Me: {txtMessage.Text}{Environment.NewLine}";
+                    txtInfo.Text += $"Moja wiadomoœæ: {txtMessage.Text}{Environment.NewLine}";
                     txtMessage.Text = string.Empty;
                 }
             }

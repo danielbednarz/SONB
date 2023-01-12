@@ -1,3 +1,4 @@
+using SONB;
 using SuperSimpleTcp;
 using System.Text;
 
@@ -11,7 +12,8 @@ namespace TCPServer
         }
 
         SimpleTcpServer server;
-        
+        static readonly Random rnd = new();
+
 
         private void label1_Click(object sender, EventArgs e)
         {
@@ -40,7 +42,7 @@ namespace TCPServer
 
             this.Invoke((MethodInvoker)delegate
             {
-                txtInfo.Text += $"{e.IpPort} disconnected.{Environment.NewLine}";
+                txtInfo.Text += $"{e.IpPort} roz³¹czono.{Environment.NewLine}";
                 lstClientIP.Items.Remove(e.IpPort);
             });
         }
@@ -49,7 +51,7 @@ namespace TCPServer
         {
             this.Invoke((MethodInvoker)delegate
             {
-                txtInfo.Text += $"{e.IpPort} connected.{Environment.NewLine}";
+                txtInfo.Text += $"{e.IpPort} po³¹czono.{Environment.NewLine}";
                 lstClientIP.Items.Add(e.IpPort);
             });
         }
@@ -62,7 +64,7 @@ namespace TCPServer
         private void btnStart_Click(object sender, EventArgs e)
         {
             server.Start();
-            txtInfo.Text += $"Starting...{Environment.NewLine}";
+            txtInfo.Text += $"Serwer wystartowa³...{Environment.NewLine}";
             btnStart.Enabled = false;
             btnSend.Enabled = true;
         }
@@ -71,13 +73,20 @@ namespace TCPServer
         {
             if (server.IsListening) 
             { 
-                if(!string.IsNullOrEmpty(txtMessage.Text) && lstClientIP.SelectedItems != null)
+                if(lstClientIP.SelectedItems != null)
                 {
-                    server.Send(lstClientIP.SelectedItem.ToString(), txtMessage.Text);
-                    txtInfo.Text += $"Sever: {txtMessage.Text}{Environment.NewLine}";
+                    txtInfo.Text += $"Serwer - wiadomoœæ do zakodowania: {SONB.Helpers.codeString}{Environment.NewLine}";
+                    var encoded = SONB.Helpers.GetEncodedCodeToSend(SONB.Helpers.codeString);
+                    server.Send(lstClientIP.SelectedItem.ToString(), Helpers.boolArrayToPrettyString(encoded));
+                    txtInfo.Text += $"Sewer - zakodowana wiadomoœæ: {Helpers.boolArrayToPrettyString(encoded)}{Environment.NewLine}";
                     txtMessage.Text = string.Empty;
                 }
             }
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

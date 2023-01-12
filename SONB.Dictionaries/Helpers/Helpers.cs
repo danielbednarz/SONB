@@ -4,6 +4,7 @@ namespace SONB
 {
     public class Helpers
     {
+        public static readonly string codeString = "1011001010110010";
         public static string boolArrayToPrettyString(bool[] arr)
         {
             return string.Join("", arr.Select(x => Convert.ToInt32(x)));
