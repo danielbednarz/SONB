@@ -23,6 +23,9 @@ namespace SONB
                 case ExceptionType.IncorrectMessage:
                     SendErrorMessageToRandomServer(collection);
                     break;
+                case ExceptionType.IncorrectMessageTwoBit:
+                    SendErrorMessagetwoBitToRandomServer(collection);
+                    break;
                 case ExceptionType.EmptyMessage:
                     AddMissingMessage(collection);
                     break;
@@ -48,7 +51,11 @@ namespace SONB
 
         private static void SendErrorMessageToRandomServer(BlockingCollection<string> collection)
         {
-            var errorPosition = rnd.Next(1, 22);
+            var errorPosition = rnd.Next(3, 22);
+            while (Helpers.isPowerOfTwo(errorPosition))
+            {
+                errorPosition = rnd.Next(3, 22);
+            }
             var code = Helpers.prettyStringToBoolArray(codeString);
             var encoded = Hamming.Encode(code);
             var encodedError = Hamming.Encode(code);
@@ -56,7 +63,39 @@ namespace SONB
             Console.WriteLine($"Serwer nadzorujacy - Wiadomość do zakodowania: {Helpers.boolArrayToPrettyString(code)}");
             Console.WriteLine($"Serwer nadzorujacy - Zakodowana wiadomość: {Helpers.boolArrayToPrettyString(encoded)}");
             MixinSingleError(encodedError, errorPosition);
-            Console.WriteLine($"Serwer nadzorujacy - Wiadomość z błędem:   {Helpers.boolArrayToPrettyString(encodedError)} ({errorPosition - 1})");
+            Console.WriteLine($"Serwer nadzorujacy - Wiadomość z błędem:   {Helpers.boolArrayToPrettyString(encodedError)} ({errorPosition})");
+
+            int loss = rnd.Next(7);
+            Console.WriteLine($"Serwer nadzorujacy - Błąd zostanie wysłany do losowego serwera\n");
+
+            for (int i = 0; i < 7; i++)
+            {
+                if (loss == i)
+                    collection.Add(Helpers.boolArrayToPrettyString(encodedError));
+                collection.Add(Helpers.boolArrayToPrettyString(encoded));
+            }
+        }
+
+        private static void SendErrorMessagetwoBitToRandomServer(BlockingCollection<string> collection)
+        {
+            var errorPosition = rnd.Next(3, 22);
+            var errorPosition2 = rnd.Next(3, 22);
+            while (Helpers.isPowerOfTwo(errorPosition))
+            {
+                errorPosition = rnd.Next(3, 22);
+            }
+            while (errorPosition == errorPosition2 || (Helpers.isPowerOfTwo(errorPosition2)))
+            {
+                errorPosition2 = rnd.Next(3, 22);
+            }  
+            var code = Helpers.prettyStringToBoolArray(codeString);
+            var encoded = Hamming.Encode(code);
+            var encodedError = Hamming.Encode(code);
+
+            Console.WriteLine($"Serwer nadzorujacy - Wiadomość do zakodowania: {Helpers.boolArrayToPrettyString(code)}");
+            Console.WriteLine($"Serwer nadzorujacy - Zakodowana wiadomość: {Helpers.boolArrayToPrettyString(encoded)}");
+            MixinDoubleError(encodedError, errorPosition, errorPosition2);
+            Console.WriteLine($"Serwer nadzorujacy - Wiadomość z dwoma błedami:   {Helpers.boolArrayToPrettyString(encodedError)} ({errorPosition})({errorPosition2}) ");
 
             int loss = rnd.Next(7);
             Console.WriteLine($"Serwer nadzorujacy - Błąd zostanie wysłany do losowego serwera\n");

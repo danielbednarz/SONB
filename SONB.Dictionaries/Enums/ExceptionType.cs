@@ -10,6 +10,7 @@ namespace SONB
     {
         NoException,
         IncorrectMessage,
+        IncorrectMessageTwoBit,
         EmptyMessage,
         NullMessage
     }

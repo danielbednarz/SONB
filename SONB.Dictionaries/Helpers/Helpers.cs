@@ -54,6 +54,17 @@ namespace SONB
 
             return encoded;
         }
+        public static bool isPowerOfTwo(int n)
+        {
+
+            if (n == 0)
+                return false;
+
+            return (int)(Math.Ceiling(
+            (Math.Log(n) / Math.Log(2))))
+            == (int)(Math.Floor(
+            ((Math.Log(n) / Math.Log(2)))));
+        }
 
     }
 }

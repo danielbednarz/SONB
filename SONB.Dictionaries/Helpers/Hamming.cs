@@ -68,5 +68,11 @@
             encoded[pos - 1] = !encoded[pos - 1];
         }
 
+        public static void MixinDoubleError(bool[] encoded, int pos, int pos2)
+        {
+            encoded[pos - 1] = !encoded[pos - 1];
+            encoded[pos2 - 1] = !encoded[pos2 - 1];
+        }
+
     }
 }
