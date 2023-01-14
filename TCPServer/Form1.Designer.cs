@@ -43,6 +43,8 @@
             this.btnError1 = new System.Windows.Forms.Button();
             this.btnError2 = new System.Windows.Forms.Button();
             this.btnNull = new System.Windows.Forms.Button();
+            this.btnEmpty = new System.Windows.Forms.Button();
+            this.btnNotHamming = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -155,7 +157,7 @@
             // 
             // btnCorrect
             // 
-            this.btnCorrect.Location = new System.Drawing.Point(12, 565);
+            this.btnCorrect.Location = new System.Drawing.Point(61, 553);
             this.btnCorrect.Name = "btnCorrect";
             this.btnCorrect.Size = new System.Drawing.Size(75, 23);
             this.btnCorrect.TabIndex = 11;
@@ -165,7 +167,7 @@
             // 
             // btnError1
             // 
-            this.btnError1.Location = new System.Drawing.Point(93, 565);
+            this.btnError1.Location = new System.Drawing.Point(142, 553);
             this.btnError1.Name = "btnError1";
             this.btnError1.Size = new System.Drawing.Size(75, 23);
             this.btnError1.TabIndex = 12;
@@ -175,7 +177,7 @@
             // 
             // btnError2
             // 
-            this.btnError2.Location = new System.Drawing.Point(174, 565);
+            this.btnError2.Location = new System.Drawing.Point(223, 553);
             this.btnError2.Name = "btnError2";
             this.btnError2.Size = new System.Drawing.Size(75, 23);
             this.btnError2.TabIndex = 13;
@@ -185,7 +187,7 @@
             // 
             // btnNull
             // 
-            this.btnNull.Location = new System.Drawing.Point(255, 565);
+            this.btnNull.Location = new System.Drawing.Point(304, 553);
             this.btnNull.Name = "btnNull";
             this.btnNull.Size = new System.Drawing.Size(75, 23);
             this.btnNull.TabIndex = 14;
@@ -193,11 +195,33 @@
             this.btnNull.UseVisualStyleBackColor = true;
             this.btnNull.Click += new System.EventHandler(this.btnNull_Click);
             // 
+            // btnEmpty
+            // 
+            this.btnEmpty.Location = new System.Drawing.Point(485, 553);
+            this.btnEmpty.Name = "btnEmpty";
+            this.btnEmpty.Size = new System.Drawing.Size(75, 23);
+            this.btnEmpty.TabIndex = 15;
+            this.btnEmpty.Text = "Empty";
+            this.btnEmpty.UseVisualStyleBackColor = true;
+            this.btnEmpty.Click += new System.EventHandler(this.btnEmpty_Click);
+            // 
+            // btnNotHamming
+            // 
+            this.btnNotHamming.Location = new System.Drawing.Point(385, 553);
+            this.btnNotHamming.Name = "btnNotHamming";
+            this.btnNotHamming.Size = new System.Drawing.Size(94, 23);
+            this.btnNotHamming.TabIndex = 16;
+            this.btnNotHamming.Text = "NotHamming";
+            this.btnNotHamming.UseVisualStyleBackColor = true;
+            this.btnNotHamming.Click += new System.EventHandler(this.btnNotHamming_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(845, 600);
+            this.ClientSize = new System.Drawing.Size(845, 581);
+            this.Controls.Add(this.btnNotHamming);
+            this.Controls.Add(this.btnEmpty);
             this.Controls.Add(this.btnNull);
             this.Controls.Add(this.btnError2);
             this.Controls.Add(this.btnError1);
@@ -240,5 +264,7 @@
         private Button btnError1;
         private Button btnError2;
         private Button btnNull;
+        private Button btnEmpty;
+        private Button btnNotHamming;
     }
 }
