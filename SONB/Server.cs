@@ -26,6 +26,9 @@ namespace SONB
                 case ExceptionType.IncorrectMessageTwoBit:
                     SendErrorMessagetwoBitToRandomServer(collection);
                     break;
+                case ExceptionType.IncorrectMessageNotHamming:
+                    SendErrorMessageNotHammingToRandomServer(collection);
+                    break;
                 case ExceptionType.EmptyMessage:
                     AddMissingMessage(collection);
                     break;
@@ -72,6 +75,23 @@ namespace SONB
             {
                 if (loss == i)
                     collection.Add(Helpers.boolArrayToPrettyString(encodedError));
+                collection.Add(Helpers.boolArrayToPrettyString(encoded));
+            }
+        }
+
+
+        private static void SendErrorMessageNotHammingToRandomServer(BlockingCollection<string> collection)
+        {
+ 
+            var code = Helpers.prettyStringToBoolArray(codeString);
+            var encoded = Hamming.Encode(code);
+
+            int loss = rnd.Next(7);
+
+            for (int i = 0; i < 7; i++)
+            {
+                if (loss == i)
+                    collection.Add(Helpers.boolArrayToPrettyString(code));
                 collection.Add(Helpers.boolArrayToPrettyString(encoded));
             }
         }
@@ -147,9 +167,16 @@ namespace SONB
 
                     if (collection.TryTake(out string res))
                     {
+
                         if (res == null)
                         {
                             Console.WriteLine($"! {Thread.CurrentThread.Name} - Błąd, wartość nie może być nullem");
+                            return;
+                        }
+
+                        if (res.Length < 21)
+                        {
+                            Console.WriteLine($"! {Thread.CurrentThread.Name} - Błąd, wiadomośc nie jest kodem Hamminga");
                             return;
                         }
 

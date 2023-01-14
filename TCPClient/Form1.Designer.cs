@@ -81,6 +81,7 @@
             this.txtMessage.Name = "txtMessage";
             this.txtMessage.Size = new System.Drawing.Size(486, 23);
             this.txtMessage.TabIndex = 4;
+            this.txtMessage.Visible = false;
             // 
             // label2
             // 
@@ -90,6 +91,7 @@
             this.label2.Size = new System.Drawing.Size(56, 15);
             this.label2.TabIndex = 5;
             this.label2.Text = "Message:";
+            this.label2.Visible = false;
             // 
             // btnSend
             // 
@@ -99,6 +101,7 @@
             this.btnSend.TabIndex = 6;
             this.btnSend.Text = "Send";
             this.btnSend.UseVisualStyleBackColor = true;
+            this.btnSend.Visible = false;
             this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
             // 
             // Form1

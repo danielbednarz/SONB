@@ -11,6 +11,7 @@ namespace SONB
         NoException,
         IncorrectMessage,
         IncorrectMessageTwoBit,
+        IncorrectMessageNotHamming,
         EmptyMessage,
         NullMessage
     }

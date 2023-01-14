@@ -54,21 +54,41 @@ namespace TCPClient
         {
             this.Invoke((MethodInvoker)delegate
             {
+                var port = client.LocalEndpoint.Port;
+                if (e.Data == null)
+                {
+                    txtInfo.Text += $"{Thread.CurrentThread.Name} - B³¹d, wartoœæ nie mo¿e byæ nullem{Environment.NewLine}";
+                    txtInfo.Text += $"Proszê serwer o ponowne nades³anie wiadomoœci.{Environment.NewLine}";
+                    client.Send(port.ToString());
+                    return;
+                }
+
+                if (e.Data.Count < 21)
+                {
+                    txtInfo.Text += $"{Thread.CurrentThread.Name} - B³¹d, wiadomoœc nie jest kodem Hamminga{Environment.NewLine}";
+                    txtInfo.Text += $"Proszê serwer o ponowne nades³anie wiadomoœci.{Environment.NewLine}";
+                    client.Send(port.ToString());
+                    return;
+                }
+                
                 var message = Encoding.UTF8.GetString(e.Data);
                 txtInfo.Text += $"{e.IpPort} Otrzymano zakodowan¹ wiadomoœæ: {message}{Environment.NewLine}";
                 var encoded = Helpers.prettyStringToBoolArray(message);
                 int calculatedErrorPosition = SONB.Hamming.ErrorSyndrome(encoded);
                 if (calculatedErrorPosition != 0)
                 {
-                    txtInfo.Text += $"! {Thread.CurrentThread.Name} - B³¹d na pozycji: {calculatedErrorPosition}{Environment.NewLine}";
+                    txtInfo.Text += $"{Thread.CurrentThread.Name} - B³¹d na pozycji: {calculatedErrorPosition}{Environment.NewLine}";
                     encoded[calculatedErrorPosition - 1] = !encoded[calculatedErrorPosition - 1];
-                    Console.WriteLine($"! {Thread.CurrentThread.Name} - B³¹d naprawiony");
+                    txtInfo.Text += $"{Thread.CurrentThread.Name} - B³¹d naprawiony";
                 }
 
                 var decoded = SONB.Hamming.Decode( encoded );
-            txtInfo.Text += $"{Thread.CurrentThread.Name} - Wiadomoœæ po odkodowaniu: {Helpers.boolArrayToPrettyString(decoded)}{Environment.NewLine}";
-
-            txtInfo.Text += Enumerable.SequenceEqual(Helpers.prettyStringToBoolArray(SONB.Helpers.codeString), decoded) ? $"{Thread.CurrentThread.Name} - Wiadomoœci s¹ takie same!" : $"{Thread.CurrentThread.Name} - Wiadomoœci s¹ ró¿ne!{Environment.NewLine}";
+                txtInfo.Text += $"{Thread.CurrentThread.Name} - Wiadomoœæ po odkodowaniu: {Helpers.boolArrayToPrettyString(decoded)}{Environment.NewLine}";
+                if(Enumerable.SequenceEqual(Helpers.prettyStringToBoolArray(SONB.Helpers.codeString), decoded))
+                {
+                    //tu ponowne zapytanie do serwera, bo wiadomoœci s¹ ró¿ne
+                }
+                txtInfo.Text += Enumerable.SequenceEqual(Helpers.prettyStringToBoolArray(SONB.Helpers.codeString), decoded) ? $"{Thread.CurrentThread.Name} - Wiadomoœci s¹ takie same!" : $"{Thread.CurrentThread.Name} - Wiadomoœci s¹ ró¿ne!{Environment.NewLine}";
             });
         }
 

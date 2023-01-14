@@ -12,6 +12,7 @@ namespace SONB
             Console.WriteLine("3. Wyslij mniejszą liczbę wiadomości");
             Console.WriteLine("4. Wyslij null");
             Console.WriteLine("5. Wyslij nieprawidłową wiadomosc z dwoma bitami do losowego serwera");
+            Console.WriteLine("6. Wyslij wiadomosc nie bedaca kodem hamminga losowego serwera");
             Console.WriteLine("0. Koniec");
 
             switch (Console.ReadLine())
@@ -30,6 +31,9 @@ namespace SONB
                     return true;
                 case "5":
                     Server.StartMasterServer(collection, ExceptionType.IncorrectMessageTwoBit);
+                    return true;
+                case "6":
+                    Server.StartMasterServer(collection, ExceptionType.IncorrectMessageNotHamming);
                     return true;
                 case "0":
                     return false;

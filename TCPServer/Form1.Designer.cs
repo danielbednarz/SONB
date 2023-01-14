@@ -38,6 +38,11 @@
             this.lstClientIP = new System.Windows.Forms.ListBox();
             this.label3 = new System.Windows.Forms.Label();
             this.labelMessage = new System.Windows.Forms.Label();
+            this.btnSendAll = new System.Windows.Forms.Button();
+            this.btnCorrect = new System.Windows.Forms.Button();
+            this.btnError1 = new System.Windows.Forms.Button();
+            this.btnError2 = new System.Windows.Forms.Button();
+            this.btnNull = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -84,6 +89,7 @@
             this.txtMessage.Name = "txtMessage";
             this.txtMessage.Size = new System.Drawing.Size(486, 23);
             this.txtMessage.TabIndex = 4;
+            this.txtMessage.Visible = false;
             // 
             // label2
             // 
@@ -93,6 +99,7 @@
             this.label2.Size = new System.Drawing.Size(56, 15);
             this.label2.TabIndex = 5;
             this.label2.Text = "Message:";
+            this.label2.Visible = false;
             // 
             // btnSend
             // 
@@ -109,7 +116,9 @@
             this.lstClientIP.FormattingEnabled = true;
             this.lstClientIP.ItemHeight = 15;
             this.lstClientIP.Location = new System.Drawing.Point(566, 47);
+            this.lstClientIP.MultiColumn = true;
             this.lstClientIP.Name = "lstClientIP";
+            this.lstClientIP.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.lstClientIP.Size = new System.Drawing.Size(256, 499);
             this.lstClientIP.TabIndex = 7;
             // 
@@ -131,13 +140,69 @@
             this.labelMessage.Size = new System.Drawing.Size(103, 15);
             this.labelMessage.TabIndex = 9;
             this.labelMessage.Text = "1011001010110010";
+            this.labelMessage.Visible = false;
             this.labelMessage.Click += new System.EventHandler(this.label4_Click);
+            // 
+            // btnSendAll
+            // 
+            this.btnSendAll.Location = new System.Drawing.Point(323, 523);
+            this.btnSendAll.Name = "btnSendAll";
+            this.btnSendAll.Size = new System.Drawing.Size(75, 23);
+            this.btnSendAll.TabIndex = 10;
+            this.btnSendAll.Text = "SendAll";
+            this.btnSendAll.UseVisualStyleBackColor = true;
+            this.btnSendAll.Click += new System.EventHandler(this.btnSendAll_Click);
+            // 
+            // btnCorrect
+            // 
+            this.btnCorrect.Location = new System.Drawing.Point(12, 565);
+            this.btnCorrect.Name = "btnCorrect";
+            this.btnCorrect.Size = new System.Drawing.Size(75, 23);
+            this.btnCorrect.TabIndex = 11;
+            this.btnCorrect.Text = "Correct";
+            this.btnCorrect.UseVisualStyleBackColor = true;
+            this.btnCorrect.Click += new System.EventHandler(this.btnCorrect_Click);
+            // 
+            // btnError1
+            // 
+            this.btnError1.Location = new System.Drawing.Point(93, 565);
+            this.btnError1.Name = "btnError1";
+            this.btnError1.Size = new System.Drawing.Size(75, 23);
+            this.btnError1.TabIndex = 12;
+            this.btnError1.Text = "Error 1 bit";
+            this.btnError1.UseVisualStyleBackColor = true;
+            this.btnError1.Click += new System.EventHandler(this.btnError1_Click);
+            // 
+            // btnError2
+            // 
+            this.btnError2.Location = new System.Drawing.Point(174, 565);
+            this.btnError2.Name = "btnError2";
+            this.btnError2.Size = new System.Drawing.Size(75, 23);
+            this.btnError2.TabIndex = 13;
+            this.btnError2.Text = "Error 2 bit";
+            this.btnError2.UseVisualStyleBackColor = true;
+            this.btnError2.Click += new System.EventHandler(this.btnError2_Click);
+            // 
+            // btnNull
+            // 
+            this.btnNull.Location = new System.Drawing.Point(255, 565);
+            this.btnNull.Name = "btnNull";
+            this.btnNull.Size = new System.Drawing.Size(75, 23);
+            this.btnNull.TabIndex = 14;
+            this.btnNull.Text = "Null";
+            this.btnNull.UseVisualStyleBackColor = true;
+            this.btnNull.Click += new System.EventHandler(this.btnNull_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(845, 556);
+            this.ClientSize = new System.Drawing.Size(845, 600);
+            this.Controls.Add(this.btnNull);
+            this.Controls.Add(this.btnError2);
+            this.Controls.Add(this.btnError1);
+            this.Controls.Add(this.btnCorrect);
+            this.Controls.Add(this.btnSendAll);
             this.Controls.Add(this.labelMessage);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.lstClientIP);
@@ -170,5 +235,10 @@
         private ListBox lstClientIP;
         private Label label3;
         private Label labelMessage;
+        private Button btnSendAll;
+        private Button btnCorrect;
+        private Button btnError1;
+        private Button btnError2;
+        private Button btnNull;
     }
 }

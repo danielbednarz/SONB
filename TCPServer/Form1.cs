@@ -1,5 +1,6 @@
 using SONB;
 using SuperSimpleTcp;
+using System;
 using System.Text;
 
 namespace TCPServer
@@ -33,7 +34,15 @@ namespace TCPServer
         {
             this.Invoke((MethodInvoker)delegate
             {
-                txtInfo.Text += $"{e.IpPort}: {Encoding.UTF8.GetString(e.Data)}{Environment.NewLine}";
+                txtInfo.Text += $"Klient prosi o ponown¹ wiadomoœæ: {Encoding.UTF8.GetString(e.Data)}{Environment.NewLine}";
+                if (e.IpPort != null)
+                {
+                    txtInfo.Text += $"Serwer - wiadomoœæ do zakodowania: {SONB.Helpers.codeString}{Environment.NewLine}";
+                    var encoded = SONB.Helpers.GetEncodedCodeToSend(SONB.Helpers.codeString);
+                    server.Send(e.IpPort, Helpers.boolArrayToPrettyString(encoded));
+                    txtInfo.Text += $"Sewer - zakodowana wiadomoœæ: {Helpers.boolArrayToPrettyString(encoded)}{Environment.NewLine}";
+                    txtMessage.Text = string.Empty;
+                }
             });
         }
 
@@ -52,7 +61,7 @@ namespace TCPServer
             this.Invoke((MethodInvoker)delegate
             {
                 txtInfo.Text += $"{e.IpPort} po³¹czono.{Environment.NewLine}";
-                lstClientIP.Items.Add(e.IpPort);
+                lstClientIP.Items.Add(e.IpPort+" - eee#1");
             });
         }
 
@@ -72,14 +81,17 @@ namespace TCPServer
         private void btnSend_Click(object sender, EventArgs e)
         {
             if (server.IsListening) 
-            { 
+            {
                 if(lstClientIP.SelectedItems != null)
                 {
-                    txtInfo.Text += $"Serwer - wiadomoœæ do zakodowania: {SONB.Helpers.codeString}{Environment.NewLine}";
-                    var encoded = SONB.Helpers.GetEncodedCodeToSend(SONB.Helpers.codeString);
-                    server.Send(lstClientIP.SelectedItem.ToString(), Helpers.boolArrayToPrettyString(encoded));
-                    txtInfo.Text += $"Sewer - zakodowana wiadomoœæ: {Helpers.boolArrayToPrettyString(encoded)}{Environment.NewLine}";
-                    txtMessage.Text = string.Empty;
+                    foreach (var item in lstClientIP.SelectedItems)
+                    {
+                        txtInfo.Text += $"Serwer - wiadomoœæ do zakodowania: {SONB.Helpers.codeString}{Environment.NewLine}";
+                        var encoded = SONB.Helpers.GetEncodedCodeToSend(SONB.Helpers.codeString);
+                        server.Send(item.ToString(), Helpers.boolArrayToPrettyString(encoded));
+                        txtInfo.Text += $"Sewer - zakodowana wiadomoœæ: {Helpers.boolArrayToPrettyString(encoded)}{Environment.NewLine}";
+                        txtMessage.Text = string.Empty;
+                    }
                 }
             }
         }
@@ -87,6 +99,90 @@ namespace TCPServer
         private void label4_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnSendAll_Click(object sender, EventArgs e)
+        {
+            if (server.IsListening)
+            {
+                if (lstClientIP.Items != null)
+                {
+                    foreach (var item in lstClientIP.Items)
+                    {
+                        
+                        //String it  = item.ToString().Substring(mystring.Length - 4);
+                        txtInfo.Text += $"Serwer - wiadomoœæ do zakodowania: {SONB.Helpers.codeString}{Environment.NewLine}";
+                        var encoded = SONB.Helpers.GetEncodedCodeToSend(SONB.Helpers.codeString);
+                        server.Send(item.ToString(), Helpers.boolArrayToPrettyString(encoded));
+                        txtInfo.Text += $"Sewer - zakodowana wiadomoœæ: {Helpers.boolArrayToPrettyString(encoded)}{Environment.NewLine}";
+                        txtMessage.Text = string.Empty;
+                    }
+                }
+            }
+        }
+
+        private void btnCorrect_Click(object sender, EventArgs e)
+        {
+            if (lstClientIP.SelectedItems != null)
+            {
+                String text ="";
+                int index = lstClientIP.SelectedItem.ToString().IndexOf("-");
+                if (index >= 0)
+                    text = lstClientIP.Text.Substring(0, index);
+                else
+                    return;
+                lstClientIP.Items.Remove(lstClientIP.SelectedItem.ToString());
+                lstClientIP.Items.Add(text + " - poprawna#1");
+                
+            }
+        }
+
+        private void btnError1_Click(object sender, EventArgs e)
+        {
+            if (lstClientIP.SelectedItems != null)
+            {
+                String text = "";
+                int index = lstClientIP.SelectedItem.ToString().IndexOf("-");
+                if (index >= 0)
+                    text = lstClientIP.Text.Substring(0, index);
+                else
+                    return;
+                lstClientIP.Items.Remove(lstClientIP.SelectedItem.ToString());
+                lstClientIP.Items.Add(text + " - blad1bit#2");
+
+            }
+        }
+
+        private void btnError2_Click(object sender, EventArgs e)
+        {
+            if (lstClientIP.SelectedItems != null)
+            {
+                String text = "";
+                int index = lstClientIP.SelectedItem.ToString().IndexOf("-");
+                if (index >= 0)
+                    text = lstClientIP.Text.Substring(0, index);
+                else
+                    return;
+                lstClientIP.Items.Remove(lstClientIP.SelectedItem.ToString());
+                lstClientIP.Items.Add(text + " - blad2bit#3");
+
+            }
+        }
+
+        private void btnNull_Click(object sender, EventArgs e)
+        {
+            if (lstClientIP.SelectedItems != null)
+            {
+                String text = "";
+                int index = lstClientIP.SelectedItem.ToString().IndexOf("-");
+                if (index >= 0)
+                    text = lstClientIP.Text.Substring(0, index);
+                else
+                    return;
+                lstClientIP.Items.Remove(lstClientIP.SelectedItem.ToString());
+                lstClientIP.Items.Add(text + " - pusta#4");
+
+            }
         }
     }
 }
