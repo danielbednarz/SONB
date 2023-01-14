@@ -35,6 +35,8 @@
             this.txtMessage = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.btnSend = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.textBoxIpClient = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label1
@@ -104,11 +106,32 @@
             this.btnSend.Visible = false;
             this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(26, 418);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(29, 15);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "Port";
+            this.label3.Click += new System.EventHandler(this.label3_Click);
+            // 
+            // textBoxIpClient
+            // 
+            this.textBoxIpClient.Enabled = false;
+            this.textBoxIpClient.Location = new System.Drawing.Point(74, 415);
+            this.textBoxIpClient.Name = "textBoxIpClient";
+            this.textBoxIpClient.Size = new System.Drawing.Size(309, 23);
+            this.textBoxIpClient.TabIndex = 8;
+            this.textBoxIpClient.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(596, 450);
+            this.Controls.Add(this.textBoxIpClient);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.btnSend);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtMessage);
@@ -135,5 +158,7 @@
         private TextBox txtMessage;
         private Label label2;
         private Button btnSend;
+        private Label label3;
+        private TextBox textBoxIpClient;
     }
 }

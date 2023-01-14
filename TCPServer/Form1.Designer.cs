@@ -118,7 +118,6 @@
             this.lstClientIP.FormattingEnabled = true;
             this.lstClientIP.ItemHeight = 15;
             this.lstClientIP.Location = new System.Drawing.Point(566, 47);
-            this.lstClientIP.MultiColumn = true;
             this.lstClientIP.Name = "lstClientIP";
             this.lstClientIP.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.lstClientIP.Size = new System.Drawing.Size(256, 499);
@@ -187,17 +186,18 @@
             // 
             // btnNull
             // 
-            this.btnNull.Location = new System.Drawing.Point(304, 553);
+            this.btnNull.Location = new System.Drawing.Point(758, 552);
             this.btnNull.Name = "btnNull";
             this.btnNull.Size = new System.Drawing.Size(75, 23);
             this.btnNull.TabIndex = 14;
             this.btnNull.Text = "Null";
             this.btnNull.UseVisualStyleBackColor = true;
+            this.btnNull.Visible = false;
             this.btnNull.Click += new System.EventHandler(this.btnNull_Click);
             // 
             // btnEmpty
             // 
-            this.btnEmpty.Location = new System.Drawing.Point(485, 553);
+            this.btnEmpty.Location = new System.Drawing.Point(304, 552);
             this.btnEmpty.Name = "btnEmpty";
             this.btnEmpty.Size = new System.Drawing.Size(75, 23);
             this.btnEmpty.TabIndex = 15;
