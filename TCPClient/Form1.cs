@@ -25,7 +25,6 @@ namespace TCPClient
             client.Events.Connected += Events_Connected;
             client.Events.DataReceived += Events_DataReceived;
             client.Events.Disconnected += Events_Disconnected;
-            btnSend.Enabled = false;
         }
 
         private void btnConnect_Click(object sender, EventArgs e)
@@ -33,7 +32,6 @@ namespace TCPClient
             try
             {
                 client.Connect();
-                btnSend.Enabled = true;
                 btnConnect.Enabled = false;
                 textBoxIpClient.Text = client.LocalEndpoint.Port.ToString();
             }
@@ -47,7 +45,7 @@ namespace TCPClient
         {
             this.Invoke((MethodInvoker)delegate
             {
-                txtInfo.Text += $"Roz³¹czono z serwerem. {Environment.NewLine}";
+                txtInfo.Text += $" --- Roz³¹czono z serwerem. ---{Environment.NewLine}";
             });
         }
 
@@ -59,24 +57,24 @@ namespace TCPClient
 
                 if (e.Data == null)
                 {
-                    txtInfo.Text += $"{Thread.CurrentThread.Name} - B³¹d, wartoœæ nie mo¿e byæ nullem{Environment.NewLine}";
-                    txtInfo.Text += $"Proszê serwer o ponowne nades³anie wiadomoœci.{Environment.NewLine}";
+                    txtInfo.Text += $" ! B³¹d, wartoœæ nie mo¿e byæ nullem!{Environment.NewLine}";
+                    txtInfo.Text += $" - Proszê serwer o ponowne nades³anie wiadomoœci.{Environment.NewLine}";
                     client.Send(port.ToString());
                     return;
                 }
 
                 if (e.Data.Count <= 1)
                 {
-                    txtInfo.Text += $"{Thread.CurrentThread.Name} - B³¹d, wiadomoœæ jest pusta{Environment.NewLine}";
-                    txtInfo.Text += $"Proszê serwer o ponowne nades³anie wiadomoœci.{Environment.NewLine}";
+                    txtInfo.Text += $" ! B³¹d, wiadomoœæ jest pusta!{Environment.NewLine}";
+                    txtInfo.Text += $" - Proszê serwer o ponowne nades³anie wiadomoœci.{Environment.NewLine}";
                     client.Send(port.ToString());
                     return;
                 }
 
                 if (e.Data.Count < 21)
                 {
-                    txtInfo.Text += $"{Thread.CurrentThread.Name} - B³¹d, wiadomoœc nie jest kodem Hamminga{Environment.NewLine}";
-                    txtInfo.Text += $"Proszê serwer o ponowne nades³anie wiadomoœci.{Environment.NewLine}";
+                    txtInfo.Text += $" ! B³¹d, wiadomoœæ nie jest kodem Hamminga!{Environment.NewLine}";
+                    txtInfo.Text += $" - Proszê serwer o ponowne nades³anie wiadomoœci.{Environment.NewLine}";
                     client.Send(port.ToString());
                     return;
                 }
@@ -89,18 +87,18 @@ namespace TCPClient
                 int calculatedErrorPosition = SONB.Hamming.ErrorSyndrome(encoded);
                 if (calculatedErrorPosition != 0)
                 {
-                    txtInfo.Text += $"{Thread.CurrentThread.Name} - B³¹d na pozycji: {calculatedErrorPosition}{Environment.NewLine}";
+                    txtInfo.Text += $" ! B³¹d na pozycji: {calculatedErrorPosition}{Environment.NewLine}";
                     encoded[calculatedErrorPosition - 1] = !encoded[calculatedErrorPosition - 1];
-                    txtInfo.Text += $"{Thread.CurrentThread.Name} - B³¹d naprawiony";
+                    txtInfo.Text += $" - B³¹d naprawiony";
                 }
 
                 var decoded = SONB.Hamming.Decode( encoded );
-                txtInfo.Text += $"{Thread.CurrentThread.Name} - Wiadomoœæ po odkodowaniu: {Helpers.boolArrayToPrettyString(decoded)}{Environment.NewLine}";
+                txtInfo.Text += $" - Wiadomoœæ po odkodowaniu: {Helpers.boolArrayToPrettyString(decoded)}{Environment.NewLine}";
                 if(!Enumerable.SequenceEqual(Helpers.prettyStringToBoolArray(SONB.Helpers.codeString), decoded))
                 {
                     client.Send(port.ToString());
                 }
-                txtInfo.Text += Enumerable.SequenceEqual(Helpers.prettyStringToBoolArray(SONB.Helpers.codeString), decoded) ? $"{Thread.CurrentThread.Name} - Wiadomoœci s¹ takie same!{Environment.NewLine}" : $"{Thread.CurrentThread.Name} - Wiadomoœci s¹ ró¿ne, proszê serwer o nades³anie poprawnej wiadomoœci!{Environment.NewLine}";
+                txtInfo.Text += Enumerable.SequenceEqual(Helpers.prettyStringToBoolArray(SONB.Helpers.codeString), decoded) ? $"{Thread.CurrentThread.Name} - Wiadomoœci s¹ takie same!{Environment.NewLine}" : $"{Thread.CurrentThread.Name} ! B³¹d wiadomoœci s¹ ró¿ne, proszê serwer o nades³anie poprawnej wiadomoœci!{Environment.NewLine}";
             });
         }
 
@@ -108,22 +106,10 @@ namespace TCPClient
         {
             this.Invoke((MethodInvoker)delegate
             {
-                txtInfo.Text += $"Po³¹czono z serwerem. {Environment.NewLine}";
+                txtInfo.Text += $" --- Po³¹czono z serwerem ---{Environment.NewLine}";
             });
         }
 
-        private void btnSend_Click(object sender, EventArgs e)
-        {
-            if(client.IsConnected)
-            { 
-                if(!string.IsNullOrEmpty(txtMessage.Text))
-                {
-                    client.Send(txtMessage.Text);
-                    txtInfo.Text += $"Moja wiadomoœæ: {txtMessage.Text}{Environment.NewLine}";
-                    txtMessage.Text = string.Empty;
-                }
-            }
-        }
 
         private void label3_Click(object sender, EventArgs e)
         {

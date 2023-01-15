@@ -34,14 +34,13 @@ namespace TCPServer
         {
             this.Invoke((MethodInvoker)delegate
             {
-                txtInfo.Text += $"Klient prosi o ponown¹ wiadomoœæ: {Encoding.UTF8.GetString(e.Data)}{Environment.NewLine}";
+                txtInfo.Text += $"Klient ({Encoding.UTF8.GetString(e.Data)}) prosi o ponown¹ wiadomoœæ.{Environment.NewLine}";
                 if (e.IpPort != null)
                 {
-                    txtInfo.Text += $"Serwer(klient-{e.IpPort}) - wiadomoœæ do zakodowania: {SONB.Helpers.codeString}{Environment.NewLine}";
+                    txtInfo.Text += $" - ({e.IpPort}) wiadomoœæ do zakodowania: {SONB.Helpers.codeString}{Environment.NewLine}";
                     var encoded = SONB.Helpers.GetEncodedCodeToSend(SONB.Helpers.codeString);
                     server.Send(e.IpPort, Helpers.boolArrayToPrettyString(encoded));
-                    txtInfo.Text += $"Sewer(klient-{e.IpPort}) - zakodowana wiadomoœæ: {Helpers.boolArrayToPrettyString(encoded)}{Environment.NewLine}";
-                    txtMessage.Text = string.Empty;
+                    txtInfo.Text += $" - ({e.IpPort}) zakodowana wiadomoœæ: {Helpers.boolArrayToPrettyString(encoded)}{Environment.NewLine}";
                 }
             });
         }
@@ -51,7 +50,7 @@ namespace TCPServer
 
             this.Invoke((MethodInvoker)delegate
             {
-                txtInfo.Text += $"{e.IpPort} roz³¹czono.{Environment.NewLine}";
+                txtInfo.Text += $" ### {e.IpPort} roz³¹czono ###{Environment.NewLine}";
                 lstClientIP.Items.Remove(e.IpPort);
             });
         }
@@ -60,8 +59,8 @@ namespace TCPServer
         {
             this.Invoke((MethodInvoker)delegate
             {
-                txtInfo.Text += $"{e.IpPort} po³¹czono.{Environment.NewLine}";
-                lstClientIP.Items.Add(e.IpPort+" - poprawna#1");
+                txtInfo.Text += $" ###{e.IpPort} po³¹czono ###{Environment.NewLine}";
+                lstClientIP.Items.Add(e.IpPort+" - poprawna #1");
             });
         }
 
@@ -73,27 +72,13 @@ namespace TCPServer
         private void btnStart_Click(object sender, EventArgs e)
         {
             server.Start();
-            txtInfo.Text += $"Serwer wystartowa³...{Environment.NewLine}";
+            txtInfo.Text += $" --- Serwer wystartowa³ ---{Environment.NewLine}";
             btnStart.Enabled = false;
             btnSend.Enabled = true;
         }
 
         private void btnSend_Click(object sender, EventArgs e)
         {
-            //if (server.IsListening) 
-            //{
-            //    if(lstClientIP.SelectedItems != null)
-            //    {
-            //        foreach (var item in lstClientIP.SelectedItems)
-            //        {
-            //            txtInfo.Text += $"Serwer - wiadomoœæ do zakodowania: {SONB.Helpers.codeString}{Environment.NewLine}";
-            //            var encoded = SONB.Helpers.GetEncodedCodeToSend(SONB.Helpers.codeString);
-            //            server.Send(item.ToString(), Helpers.boolArrayToPrettyString(encoded));
-            //            txtInfo.Text += $"Sewer - zakodowana wiadomoœæ: {Helpers.boolArrayToPrettyString(encoded)}{Environment.NewLine}";
-            //            txtMessage.Text = string.Empty;
-            //        }
-            //    }
-            //}
             if (server.IsListening)
             {
                 if (lstClientIP.SelectedItems != null)
@@ -108,7 +93,7 @@ namespace TCPServer
                         if (index >= 0)
                             ipPort = item.ToString().Substring(0, index - 1);
 
-                        txtInfo.Text += $"Serwer(klient-{ipPort}) - wiadomoœæ do zakodowania: {SONB.Helpers.codeString}{Environment.NewLine}";
+                        txtInfo.Text += $" - ({ipPort}) wiadomoœæ do zakodowania: {SONB.Helpers.codeString}{Environment.NewLine}";
                         var encoded = SONB.Helpers.GetEncodedCodeToSend(SONB.Helpers.codeString);
 
 
@@ -125,9 +110,9 @@ namespace TCPServer
                             }
                             var code = Helpers.prettyStringToBoolArray(SONB.Helpers.codeString);
                             var encodedError = Hamming.Encode(code);
-                            txtInfo.Text += $"Sewer(klient-{ipPort}) - zakodowana wiadomoœæ: {Helpers.boolArrayToPrettyString(encoded)}{Environment.NewLine}";
+                            txtInfo.Text += $" - ({ipPort})  zakodowana wiadomoœæ: {Helpers.boolArrayToPrettyString(encoded)}{Environment.NewLine}";
                             SONB.Hamming.MixinSingleError(encodedError, errorPosition);
-                            txtInfo.Text += ($"Serwer(klient-{ipPort})  - Wiadomoœæ z b³êdem:   {Helpers.boolArrayToPrettyString(encodedError)} ({errorPosition}){Environment.NewLine}");
+                            txtInfo.Text += ($" - ({ipPort}) wiadomoœæ z b³êdem:   {Helpers.boolArrayToPrettyString(encodedError)} ({errorPosition}){Environment.NewLine}");
                             message = Helpers.boolArrayToPrettyString(encodedError);
                         }
                         if (it.Equals("#3"))
@@ -144,23 +129,23 @@ namespace TCPServer
                             }
                             var code = Helpers.prettyStringToBoolArray(SONB.Helpers.codeString);
                             var encodedError = Hamming.Encode(code);
-                            txtInfo.Text += $"Sewer(klient-{ipPort}) - zakodowana wiadomoœæ: {Helpers.boolArrayToPrettyString(encoded)}{Environment.NewLine}";
+                            txtInfo.Text += $" - ({ipPort})  zakodowana wiadomoœæ: {Helpers.boolArrayToPrettyString(encoded)}{Environment.NewLine}";
                             SONB.Hamming.MixinDoubleError(encodedError, errorPosition, errorPosition2);
-                            txtInfo.Text += ($"Serwer(klient-{ipPort})  - Wiadomoœæ z b³êdemna 2 bitach:   {Helpers.boolArrayToPrettyString(encodedError)} ({errorPosition})({errorPosition2}){Environment.NewLine}");
+                            txtInfo.Text += ($" - ({ipPort})  wiadomoœæ z b³êdem na 2 bitach:   {Helpers.boolArrayToPrettyString(encodedError)} ({errorPosition})({errorPosition2}){Environment.NewLine}");
                             message = Helpers.boolArrayToPrettyString(encodedError);
+                        }
+                        if (it.Equals("#4"))
+                        {
+                            message = " ";
                         }
                         if (it.Equals("#5"))
                         {
                             message = SONB.Helpers.codeString;
                         }
-                        if (it.Equals("#6"))
-                        {
-                            message = " ";
-                        }
+                 
 
                         server.Send(ipPort, message);
-                        txtInfo.Text += $"Sewer(klient-{ipPort}) -  wiadomoœæ: {message}{Environment.NewLine}";
-                        txtMessage.Text = string.Empty;
+                        txtInfo.Text += $" - ({ipPort}) zostanie wys³ana wiadomoœæ: {message}{Environment.NewLine}";
                     }
                 }
             }
@@ -181,16 +166,16 @@ namespace TCPServer
                     {
 
                         String ipPort = "";
-                        String message=" ";
+                        String message = " ";
                         int index = item.ToString().IndexOf("-");
                         String it = item.ToString().Substring(item.ToString().Length - 2);
                         if (index >= 0)
-                            ipPort = item.ToString().Substring(0, index-1);
-                        
-                        txtInfo.Text += $"Serwer(klient-{ipPort}) - wiadomoœæ do zakodowania: {SONB.Helpers.codeString}{Environment.NewLine}";
+                            ipPort = item.ToString().Substring(0, index - 1);
+
+                        txtInfo.Text += $" - ({ipPort}) wiadomoœæ do zakodowania: {SONB.Helpers.codeString}{Environment.NewLine}";
                         var encoded = SONB.Helpers.GetEncodedCodeToSend(SONB.Helpers.codeString);
-                        
-                        
+
+
                         if (it.Equals("#1"))
                         {
                             message = Helpers.boolArrayToPrettyString(encoded);
@@ -204,9 +189,9 @@ namespace TCPServer
                             }
                             var code = Helpers.prettyStringToBoolArray(SONB.Helpers.codeString);
                             var encodedError = Hamming.Encode(code);
-                            txtInfo.Text += $"Sewer(klient-{ipPort}) - zakodowana wiadomoœæ: {Helpers.boolArrayToPrettyString(encoded)}{Environment.NewLine}";
+                            txtInfo.Text += $" - ({ipPort})  zakodowana wiadomoœæ: {Helpers.boolArrayToPrettyString(encoded)}{Environment.NewLine}";
                             SONB.Hamming.MixinSingleError(encodedError, errorPosition);
-                            txtInfo.Text += ($"Serwer(klient-{ipPort})  - Wiadomoœæ z b³êdem:   {Helpers.boolArrayToPrettyString(encodedError)} ({errorPosition}){Environment.NewLine}");
+                            txtInfo.Text += ($" - ({ipPort}) wiadomoœæ z b³êdem:   {Helpers.boolArrayToPrettyString(encodedError)} ({errorPosition}){Environment.NewLine}");
                             message = Helpers.boolArrayToPrettyString(encodedError);
                         }
                         if (it.Equals("#3"))
@@ -223,27 +208,23 @@ namespace TCPServer
                             }
                             var code = Helpers.prettyStringToBoolArray(SONB.Helpers.codeString);
                             var encodedError = Hamming.Encode(code);
-                            txtInfo.Text += $"Sewer(klient-{ipPort}) - zakodowana wiadomoœæ: {Helpers.boolArrayToPrettyString(encoded)}{Environment.NewLine}";
+                            txtInfo.Text += $" - ({ipPort})  zakodowana wiadomoœæ: {Helpers.boolArrayToPrettyString(encoded)}{Environment.NewLine}";
                             SONB.Hamming.MixinDoubleError(encodedError, errorPosition, errorPosition2);
-                            txtInfo.Text += ($"Serwer(klient-{ipPort})  - Wiadomoœæ z b³êdemna 2 bitach:   {Helpers.boolArrayToPrettyString(encodedError)} ({errorPosition})({errorPosition2}){Environment.NewLine}");
+                            txtInfo.Text += ($" - ({ipPort})  wiadomoœæ z b³êdem na 2 bitach:   {Helpers.boolArrayToPrettyString(encodedError)} ({errorPosition})({errorPosition2}){Environment.NewLine}");
                             message = Helpers.boolArrayToPrettyString(encodedError);
                         }
                         if (it.Equals("#4"))
                         {
-                            message = null;
+                            message = " ";
                         }
                         if (it.Equals("#5"))
                         {
                             message = SONB.Helpers.codeString;
                         }
-                        if (it.Equals("#6"))
-                        {
-                            message = " ";
-                        }
+
 
                         server.Send(ipPort, message);
-                        txtInfo.Text += $"Sewer(klient-{ipPort}) -  wiadomoœæ: {message}{Environment.NewLine}";
-                        txtMessage.Text = string.Empty;
+                        txtInfo.Text += $" - ({ipPort}) zostanie wys³ana wiadomoœæ: {message}{Environment.NewLine}";
                     }
                 }
             }
@@ -251,7 +232,7 @@ namespace TCPServer
 
         private void btnCorrect_Click(object sender, EventArgs e)
         {
-            if (lstClientIP.SelectedItems != null)
+            if (lstClientIP.SelectedItem != null)
             {
                 String text ="";
                 int index = lstClientIP.SelectedItem.ToString().IndexOf("-");
@@ -260,14 +241,14 @@ namespace TCPServer
                 else
                     return;
                 lstClientIP.Items.Remove(lstClientIP.SelectedItem.ToString());
-                lstClientIP.Items.Add(text + " - poprawna#1");
+                lstClientIP.Items.Add(text + " - poprawna #1");
                 
             }
         }
 
         private void btnError1_Click(object sender, EventArgs e)
         {
-            if (lstClientIP.SelectedItems != null)
+            if (lstClientIP.SelectedItem != null)
             {
                 String text = "";
                 int index = lstClientIP.SelectedItem.ToString().IndexOf("-");
@@ -276,14 +257,14 @@ namespace TCPServer
                 else
                     return;
                 lstClientIP.Items.Remove(lstClientIP.SelectedItem.ToString());
-                lstClientIP.Items.Add(text + " - blad1bit#2");
+                lstClientIP.Items.Add(text + " - b³¹d 1 bit #2");
 
             }
         }
 
         private void btnError2_Click(object sender, EventArgs e)
         {
-            if (lstClientIP.SelectedItems != null)
+            if (lstClientIP.SelectedItem != null)
             {
                 String text = "";
                 int index = lstClientIP.SelectedItem.ToString().IndexOf("-");
@@ -292,44 +273,30 @@ namespace TCPServer
                 else
                     return;
                 lstClientIP.Items.Remove(lstClientIP.SelectedItem.ToString());
-                lstClientIP.Items.Add(text + " - blad2bit#3");
-
-            }
-        }
-
-        private void btnNull_Click(object sender, EventArgs e)
-        {
-            if (lstClientIP.SelectedItems != null)
-            {
-                String text = "";
-                int index = lstClientIP.SelectedItem.ToString().IndexOf("-");
-                if (index >= 0)
-                    text = lstClientIP.Text.Substring(0, index-1);
-                else
-                    return;
-                lstClientIP.Items.Remove(lstClientIP.SelectedItem.ToString());
-                lstClientIP.Items.Add(text + " - null#4");
-
-            }
-        }
-
-        private void btnNotHamming_Click(object sender, EventArgs e)
-        {
-            {
-                String text = "";
-                int index = lstClientIP.SelectedItem.ToString().IndexOf("-");
-                if (index >= 0)
-                    text = lstClientIP.Text.Substring(0, index-1);
-                else
-                    return;
-                lstClientIP.Items.Remove(lstClientIP.SelectedItem.ToString());
-                lstClientIP.Items.Add(text + " - nieHamming#5");
+                lstClientIP.Items.Add(text + " - b³¹d 2 bit #3");
 
             }
         }
 
         private void btnEmpty_Click(object sender, EventArgs e)
         {
+            if (lstClientIP.SelectedItem != null)
+            {
+                String text = "";
+                int index = lstClientIP.SelectedItem.ToString().IndexOf("-");
+                if (index >= 0)
+                    text = lstClientIP.Text.Substring(0, index - 1);
+                else
+                    return;
+                lstClientIP.Items.Remove(lstClientIP.SelectedItem.ToString());
+                lstClientIP.Items.Add(text + " - pusta #4");
+
+            }
+        }
+
+        private void btnNotHamming_Click(object sender, EventArgs e)
+        {
+            if (lstClientIP.SelectedItem != null)
             {
                 String text = "";
                 int index = lstClientIP.SelectedItem.ToString().IndexOf("-");
@@ -338,9 +305,10 @@ namespace TCPServer
                 else
                     return;
                 lstClientIP.Items.Remove(lstClientIP.SelectedItem.ToString());
-                lstClientIP.Items.Add(text + " - pusta#6");
+                lstClientIP.Items.Add(text + " - nie kod Hamminga #5");
 
             }
         }
+
     }
 }

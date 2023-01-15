@@ -32,17 +32,13 @@
             this.btnStart = new System.Windows.Forms.Button();
             this.txtIP = new System.Windows.Forms.TextBox();
             this.txtInfo = new System.Windows.Forms.TextBox();
-            this.txtMessage = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.btnSend = new System.Windows.Forms.Button();
             this.lstClientIP = new System.Windows.Forms.ListBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.labelMessage = new System.Windows.Forms.Label();
             this.btnSendAll = new System.Windows.Forms.Button();
             this.btnCorrect = new System.Windows.Forms.Button();
             this.btnError1 = new System.Windows.Forms.Button();
             this.btnError2 = new System.Windows.Forms.Button();
-            this.btnNull = new System.Windows.Forms.Button();
             this.btnEmpty = new System.Windows.Forms.Button();
             this.btnNotHamming = new System.Windows.Forms.Button();
             this.SuspendLayout();
@@ -59,7 +55,7 @@
             // 
             // btnStart
             // 
-            this.btnStart.Location = new System.Drawing.Point(485, 524);
+            this.btnStart.Location = new System.Drawing.Point(262, 495);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(75, 23);
             this.btnStart.TabIndex = 2;
@@ -85,27 +81,9 @@
             this.txtInfo.Size = new System.Drawing.Size(486, 442);
             this.txtInfo.TabIndex = 3;
             // 
-            // txtMessage
-            // 
-            this.txtMessage.Location = new System.Drawing.Point(74, 495);
-            this.txtMessage.Name = "txtMessage";
-            this.txtMessage.Size = new System.Drawing.Size(486, 23);
-            this.txtMessage.TabIndex = 4;
-            this.txtMessage.Visible = false;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 498);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(56, 15);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "Message:";
-            this.label2.Visible = false;
-            // 
             // btnSend
             // 
-            this.btnSend.Location = new System.Drawing.Point(404, 524);
+            this.btnSend.Location = new System.Drawing.Point(219, 553);
             this.btnSend.Name = "btnSend";
             this.btnSend.Size = new System.Drawing.Size(75, 23);
             this.btnSend.TabIndex = 6;
@@ -120,7 +98,7 @@
             this.lstClientIP.Location = new System.Drawing.Point(566, 47);
             this.lstClientIP.Name = "lstClientIP";
             this.lstClientIP.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lstClientIP.Size = new System.Drawing.Size(256, 499);
+            this.lstClientIP.Size = new System.Drawing.Size(256, 529);
             this.lstClientIP.TabIndex = 7;
             // 
             // label3
@@ -133,20 +111,9 @@
             this.label3.Text = "Client IP:";
             this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
-            // labelMessage
-            // 
-            this.labelMessage.AutoSize = true;
-            this.labelMessage.Location = new System.Drawing.Point(74, 528);
-            this.labelMessage.Name = "labelMessage";
-            this.labelMessage.Size = new System.Drawing.Size(103, 15);
-            this.labelMessage.TabIndex = 9;
-            this.labelMessage.Text = "1011001010110010";
-            this.labelMessage.Visible = false;
-            this.labelMessage.Click += new System.EventHandler(this.label4_Click);
-            // 
             // btnSendAll
             // 
-            this.btnSendAll.Location = new System.Drawing.Point(323, 523);
+            this.btnSendAll.Location = new System.Drawing.Point(300, 553);
             this.btnSendAll.Name = "btnSendAll";
             this.btnSendAll.Size = new System.Drawing.Size(75, 23);
             this.btnSendAll.TabIndex = 10;
@@ -156,7 +123,7 @@
             // 
             // btnCorrect
             // 
-            this.btnCorrect.Location = new System.Drawing.Point(61, 553);
+            this.btnCorrect.Location = new System.Drawing.Point(100, 524);
             this.btnCorrect.Name = "btnCorrect";
             this.btnCorrect.Size = new System.Drawing.Size(75, 23);
             this.btnCorrect.TabIndex = 11;
@@ -166,7 +133,7 @@
             // 
             // btnError1
             // 
-            this.btnError1.Location = new System.Drawing.Point(142, 553);
+            this.btnError1.Location = new System.Drawing.Point(181, 524);
             this.btnError1.Name = "btnError1";
             this.btnError1.Size = new System.Drawing.Size(75, 23);
             this.btnError1.TabIndex = 12;
@@ -176,7 +143,7 @@
             // 
             // btnError2
             // 
-            this.btnError2.Location = new System.Drawing.Point(223, 553);
+            this.btnError2.Location = new System.Drawing.Point(262, 524);
             this.btnError2.Name = "btnError2";
             this.btnError2.Size = new System.Drawing.Size(75, 23);
             this.btnError2.TabIndex = 13;
@@ -184,20 +151,9 @@
             this.btnError2.UseVisualStyleBackColor = true;
             this.btnError2.Click += new System.EventHandler(this.btnError2_Click);
             // 
-            // btnNull
-            // 
-            this.btnNull.Location = new System.Drawing.Point(758, 552);
-            this.btnNull.Name = "btnNull";
-            this.btnNull.Size = new System.Drawing.Size(75, 23);
-            this.btnNull.TabIndex = 14;
-            this.btnNull.Text = "Null";
-            this.btnNull.UseVisualStyleBackColor = true;
-            this.btnNull.Visible = false;
-            this.btnNull.Click += new System.EventHandler(this.btnNull_Click);
-            // 
             // btnEmpty
             // 
-            this.btnEmpty.Location = new System.Drawing.Point(304, 552);
+            this.btnEmpty.Location = new System.Drawing.Point(343, 523);
             this.btnEmpty.Name = "btnEmpty";
             this.btnEmpty.Size = new System.Drawing.Size(75, 23);
             this.btnEmpty.TabIndex = 15;
@@ -207,7 +163,7 @@
             // 
             // btnNotHamming
             // 
-            this.btnNotHamming.Location = new System.Drawing.Point(385, 553);
+            this.btnNotHamming.Location = new System.Drawing.Point(424, 524);
             this.btnNotHamming.Name = "btnNotHamming";
             this.btnNotHamming.Size = new System.Drawing.Size(94, 23);
             this.btnNotHamming.TabIndex = 16;
@@ -219,20 +175,16 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(845, 581);
+            this.ClientSize = new System.Drawing.Size(845, 586);
             this.Controls.Add(this.btnNotHamming);
             this.Controls.Add(this.btnEmpty);
-            this.Controls.Add(this.btnNull);
             this.Controls.Add(this.btnError2);
             this.Controls.Add(this.btnError1);
             this.Controls.Add(this.btnCorrect);
             this.Controls.Add(this.btnSendAll);
-            this.Controls.Add(this.labelMessage);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.lstClientIP);
             this.Controls.Add(this.btnSend);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.txtMessage);
             this.Controls.Add(this.txtInfo);
             this.Controls.Add(this.btnStart);
             this.Controls.Add(this.txtIP);
@@ -253,17 +205,13 @@
         private Button btnStart;
         private TextBox txtIP;
         private TextBox txtInfo;
-        private TextBox txtMessage;
-        private Label label2;
         private Button btnSend;
         private ListBox lstClientIP;
         private Label label3;
-        private Label labelMessage;
         private Button btnSendAll;
         private Button btnCorrect;
         private Button btnError1;
         private Button btnError2;
-        private Button btnNull;
         private Button btnEmpty;
         private Button btnNotHamming;
     }
