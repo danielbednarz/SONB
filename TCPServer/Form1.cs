@@ -16,11 +16,6 @@ namespace TCPServer
         static readonly Random rnd = new();
 
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void Form1_Load(object sender, EventArgs e)
         {
             btnSend.Enabled = false;
@@ -64,10 +59,6 @@ namespace TCPServer
             });
         }
 
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void btnStart_Click(object sender, EventArgs e)
         {
@@ -81,7 +72,7 @@ namespace TCPServer
         {
             if (server.IsListening)
             {
-                if (lstClientIP.SelectedItems != null)
+                if (lstClientIP.SelectedItem != null)
                 {
                     foreach (var item in lstClientIP.SelectedItems)
                     {
@@ -148,12 +139,11 @@ namespace TCPServer
                         txtInfo.Text += $" - ({ipPort}) zostanie wys³ana wiadomoœæ: {message}{Environment.NewLine}";
                     }
                 }
+                else
+                {
+                    showMessage();
+                }
             }
-        }
-
-        private void label4_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void btnSendAll_Click(object sender, EventArgs e)
@@ -230,6 +220,12 @@ namespace TCPServer
             }
         }
 
+        private void showMessage()
+        {
+            string message = "W list box musi byæ zaznaczony klient!";
+            MessageBox.Show(message);
+        }
+
         private void btnCorrect_Click(object sender, EventArgs e)
         {
             if (lstClientIP.SelectedItem != null)
@@ -243,6 +239,10 @@ namespace TCPServer
                 lstClientIP.Items.Remove(lstClientIP.SelectedItem.ToString());
                 lstClientIP.Items.Add(text + " - poprawna #1");
                 
+            }
+            else
+            {
+                showMessage();
             }
         }
 
@@ -260,6 +260,10 @@ namespace TCPServer
                 lstClientIP.Items.Add(text + " - b³¹d 1 bit #2");
 
             }
+            else
+            {
+                showMessage();
+            }
         }
 
         private void btnError2_Click(object sender, EventArgs e)
@@ -275,6 +279,10 @@ namespace TCPServer
                 lstClientIP.Items.Remove(lstClientIP.SelectedItem.ToString());
                 lstClientIP.Items.Add(text + " - b³¹d 2 bit #3");
 
+            }
+            else
+            {
+                showMessage();
             }
         }
 
@@ -292,6 +300,10 @@ namespace TCPServer
                 lstClientIP.Items.Add(text + " - pusta #4");
 
             }
+            else
+            {
+                showMessage();
+            }
         }
 
         private void btnNotHamming_Click(object sender, EventArgs e)
@@ -307,6 +319,10 @@ namespace TCPServer
                 lstClientIP.Items.Remove(lstClientIP.SelectedItem.ToString());
                 lstClientIP.Items.Add(text + " - nie kod Hamminga #5");
 
+            }
+            else
+            {
+                showMessage();
             }
         }
 

@@ -51,7 +51,6 @@
             this.label1.Size = new System.Drawing.Size(42, 15);
             this.label1.TabIndex = 0;
             this.label1.Text = "Server:";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // btnStart
             // 
@@ -109,7 +108,6 @@
             this.label3.Size = new System.Drawing.Size(54, 15);
             this.label3.TabIndex = 8;
             this.label3.Text = "Client IP:";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // btnSendAll
             // 

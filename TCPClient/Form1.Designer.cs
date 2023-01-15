@@ -44,7 +44,6 @@
             this.label1.Size = new System.Drawing.Size(42, 15);
             this.label1.TabIndex = 0;
             this.label1.Text = "Server:";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // btnConnect
             // 
@@ -82,7 +81,6 @@
             this.label3.Size = new System.Drawing.Size(32, 15);
             this.label3.TabIndex = 7;
             this.label3.Text = "Port:";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // textBoxIpClient
             // 
@@ -91,7 +89,6 @@
             this.textBoxIpClient.Name = "textBoxIpClient";
             this.textBoxIpClient.Size = new System.Drawing.Size(167, 23);
             this.textBoxIpClient.TabIndex = 8;
-            this.textBoxIpClient.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // Form1
             // 
