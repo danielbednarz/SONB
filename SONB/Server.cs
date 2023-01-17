@@ -48,25 +48,25 @@ namespace SONB
 
             for (int i = 0; i < 7; i++)
             {
-                collection.Add(Helpers.boolArrayToPrettyString(encoded));
+                collection.Add(Helpers.ConvertBoolArrayToString(encoded));
             }
         }
 
         private static void SendErrorMessageToRandomServer(BlockingCollection<string> collection)
         {
             var errorPosition = rnd.Next(3, 22);
-            while (Helpers.isPowerOfTwo(errorPosition))
+            while (Helpers.IsPowerOfTwo(errorPosition))
             {
                 errorPosition = rnd.Next(3, 22);
             }
-            var code = Helpers.prettyStringToBoolArray(codeString);
+            var code = Helpers.ConvertStringToBoolArray(codeString);
             var encoded = Hamming.Encode(code);
             var encodedError = Hamming.Encode(code);
 
-            Console.WriteLine($"Serwer nadzorujacy - Wiadomość do zakodowania: {Helpers.boolArrayToPrettyString(code)}");
-            Console.WriteLine($"Serwer nadzorujacy - Zakodowana wiadomość: {Helpers.boolArrayToPrettyString(encoded)}");
+            Console.WriteLine($"Serwer nadzorujacy - Wiadomość do zakodowania: {Helpers.ConvertBoolArrayToString(code)}");
+            Console.WriteLine($"Serwer nadzorujacy - Zakodowana wiadomość: {Helpers.ConvertBoolArrayToString(encoded)}");
             MixinSingleError(encodedError, errorPosition);
-            Console.WriteLine($"Serwer nadzorujacy - Wiadomość z błędem:   {Helpers.boolArrayToPrettyString(encodedError)} ({errorPosition})");
+            Console.WriteLine($"Serwer nadzorujacy - Wiadomość z błędem:   {Helpers.ConvertBoolArrayToString(encodedError)} ({errorPosition})");
 
             int loss = rnd.Next(7);
             Console.WriteLine($"Serwer nadzorujacy - Błąd zostanie wysłany do losowego serwera\n");
@@ -74,8 +74,8 @@ namespace SONB
             for (int i = 0; i < 7; i++)
             {
                 if (loss == i)
-                    collection.Add(Helpers.boolArrayToPrettyString(encodedError));
-                collection.Add(Helpers.boolArrayToPrettyString(encoded));
+                    collection.Add(Helpers.ConvertBoolArrayToString(encodedError));
+                collection.Add(Helpers.ConvertBoolArrayToString(encoded));
             }
         }
 
@@ -83,7 +83,7 @@ namespace SONB
         private static void SendErrorMessageNotHammingToRandomServer(BlockingCollection<string> collection)
         {
  
-            var code = Helpers.prettyStringToBoolArray(codeString);
+            var code = Helpers.ConvertStringToBoolArray(codeString);
             var encoded = Hamming.Encode(code);
 
             int loss = rnd.Next(7);
@@ -91,8 +91,8 @@ namespace SONB
             for (int i = 0; i < 7; i++)
             {
                 if (loss == i)
-                    collection.Add(Helpers.boolArrayToPrettyString(code));
-                collection.Add(Helpers.boolArrayToPrettyString(encoded));
+                    collection.Add(Helpers.ConvertBoolArrayToString(code));
+                collection.Add(Helpers.ConvertBoolArrayToString(encoded));
             }
         }
 
@@ -100,22 +100,22 @@ namespace SONB
         {
             var errorPosition = rnd.Next(3, 22);
             var errorPosition2 = rnd.Next(3, 22);
-            while (Helpers.isPowerOfTwo(errorPosition))
+            while (Helpers.IsPowerOfTwo(errorPosition))
             {
                 errorPosition = rnd.Next(3, 22);
             }
-            while (errorPosition == errorPosition2 || (Helpers.isPowerOfTwo(errorPosition2)))
+            while (errorPosition == errorPosition2 || (Helpers.IsPowerOfTwo(errorPosition2)))
             {
                 errorPosition2 = rnd.Next(3, 22);
             }  
-            var code = Helpers.prettyStringToBoolArray(codeString);
+            var code = Helpers.ConvertStringToBoolArray(codeString);
             var encoded = Hamming.Encode(code);
             var encodedError = Hamming.Encode(code);
 
-            Console.WriteLine($"Serwer nadzorujacy - Wiadomość do zakodowania: {Helpers.boolArrayToPrettyString(code)}");
-            Console.WriteLine($"Serwer nadzorujacy - Zakodowana wiadomość: {Helpers.boolArrayToPrettyString(encoded)}");
+            Console.WriteLine($"Serwer nadzorujacy - Wiadomość do zakodowania: {Helpers.ConvertBoolArrayToString(code)}");
+            Console.WriteLine($"Serwer nadzorujacy - Zakodowana wiadomość: {Helpers.ConvertBoolArrayToString(encoded)}");
             MixinDoubleError(encodedError, errorPosition, errorPosition2);
-            Console.WriteLine($"Serwer nadzorujacy - Wiadomość z dwoma błedami:   {Helpers.boolArrayToPrettyString(encodedError)} ({errorPosition})({errorPosition2}) ");
+            Console.WriteLine($"Serwer nadzorujacy - Wiadomość z dwoma błedami:   {Helpers.ConvertBoolArrayToString(encodedError)} ({errorPosition})({errorPosition2}) ");
 
             int loss = rnd.Next(7);
             Console.WriteLine($"Serwer nadzorujacy - Błąd zostanie wysłany do losowego serwera\n");
@@ -123,8 +123,8 @@ namespace SONB
             for (int i = 0; i < 7; i++)
             {
                 if (loss == i)
-                    collection.Add(Helpers.boolArrayToPrettyString(encodedError));
-                collection.Add(Helpers.boolArrayToPrettyString(encoded));
+                    collection.Add(Helpers.ConvertBoolArrayToString(encodedError));
+                collection.Add(Helpers.ConvertBoolArrayToString(encoded));
             }
         }
 
@@ -135,7 +135,7 @@ namespace SONB
 
             for (int i = 0; i < 7; i++)
             {
-                collection.Add(Helpers.boolArrayToPrettyString(encoded));
+                collection.Add(Helpers.ConvertBoolArrayToString(encoded));
                 if (i == randomError)
                 {
                     // dodanie wiadomosci null
@@ -151,7 +151,7 @@ namespace SONB
 
             for (int i = 0; i < 6; i++)
             {
-                collection.Add(Helpers.boolArrayToPrettyString(encoded));
+                collection.Add(Helpers.ConvertBoolArrayToString(encoded));
             }
         }
 
@@ -180,9 +180,9 @@ namespace SONB
                             return;
                         }
 
-                        var encoded = Helpers.prettyStringToBoolArray(res);
+                        var encoded = Helpers.ConvertStringToBoolArray(res);
 
-                        Console.WriteLine($"{Thread.CurrentThread.Name} - Otrzymano zakodowaną wiadomość: {Helpers.boolArrayToPrettyString(encoded)}");
+                        Console.WriteLine($"{Thread.CurrentThread.Name} - Otrzymano zakodowaną wiadomość: {Helpers.ConvertBoolArrayToString(encoded)}");
 
                         int calculatedErrorPosition = ErrorSyndrome(encoded);
                         if (calculatedErrorPosition != 0)
@@ -193,9 +193,9 @@ namespace SONB
                         }
 
                         var decoded = Decode(encoded);
-                        Console.WriteLine($"{Thread.CurrentThread.Name} - Wiadomość po odkodowaniu: {Helpers.boolArrayToPrettyString(decoded)}");
+                        Console.WriteLine($"{Thread.CurrentThread.Name} - Wiadomość po odkodowaniu: {Helpers.ConvertBoolArrayToString(decoded)}");
 
-                        Console.WriteLine(Enumerable.SequenceEqual(Helpers.prettyStringToBoolArray(codeString), decoded) ? $"{Thread.CurrentThread.Name} - Wiadomości są takie same!" : $"{Thread.CurrentThread.Name} - Wiadomości są różne!");
+                        Console.WriteLine(Enumerable.SequenceEqual(Helpers.ConvertStringToBoolArray(codeString), decoded) ? $"{Thread.CurrentThread.Name} - Wiadomości są takie same!" : $"{Thread.CurrentThread.Name} - Wiadomości są różne!");
 
                     }
                     else

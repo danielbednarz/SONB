@@ -21,13 +21,13 @@
                 j++;
             }
 
-            encoded[0] = Helpers.doXoringForPosition(encoded, length, 1);
-            encoded[1] = Helpers.doXoringForPosition(encoded, length, 2);
-            encoded[3] = Helpers.doXoringForPosition(encoded, length, 4);
+            encoded[0] = Helpers.DoXoringForPosition(encoded, length, 1);
+            encoded[1] = Helpers.DoXoringForPosition(encoded, length, 2);
+            encoded[3] = Helpers.DoXoringForPosition(encoded, length, 4);
             if (length > 7)
-                encoded[7] = Helpers.doXoringForPosition(encoded, length, 8);
+                encoded[7] = Helpers.DoXoringForPosition(encoded, length, 8);
             if (length > 15)
-                encoded[15] = Helpers.doXoringForPosition(encoded, length, 16);
+                encoded[15] = Helpers.DoXoringForPosition(encoded, length, 16);
 
             return encoded;
         }
@@ -52,13 +52,13 @@
         public static int ErrorSyndrome(bool[] encoded)
         {
             int syndrome =
-                (Convert.ToInt32(Helpers.doXoringForPosition(encoded, length, 1) ^ encoded[0])) +
-                (Convert.ToInt32(Helpers.doXoringForPosition(encoded, length, 2) ^ encoded[1]) << 1) +
-                (Convert.ToInt32(Helpers.doXoringForPosition(encoded, length, 4) ^ encoded[3]) << 2);
+                (Convert.ToInt32(Helpers.DoXoringForPosition(encoded, length, 1) ^ encoded[0])) +
+                (Convert.ToInt32(Helpers.DoXoringForPosition(encoded, length, 2) ^ encoded[1]) << 1) +
+                (Convert.ToInt32(Helpers.DoXoringForPosition(encoded, length, 4) ^ encoded[3]) << 2);
             if (length > 7) syndrome +=
-               (Convert.ToInt32(Helpers.doXoringForPosition(encoded, length, 8) ^ encoded[7]) << 3);
+               (Convert.ToInt32(Helpers.DoXoringForPosition(encoded, length, 8) ^ encoded[7]) << 3);
             if (length > 15) syndrome +=
-               (Convert.ToInt32(Helpers.doXoringForPosition(encoded, length, 16) ^ encoded[15]) << 4);
+               (Convert.ToInt32(Helpers.DoXoringForPosition(encoded, length, 16) ^ encoded[15]) << 4);
 
             return syndrome;
         }

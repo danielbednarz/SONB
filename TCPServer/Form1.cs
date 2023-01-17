@@ -34,8 +34,8 @@ namespace TCPServer
                 {
                     txtInfo.Text += $" - ({e.IpPort}) wiadomoœæ do zakodowania: {SONB.Helpers.codeString}{Environment.NewLine}";
                     var encoded = SONB.Helpers.GetEncodedCodeToSend(SONB.Helpers.codeString);
-                    server.Send(e.IpPort, Helpers.boolArrayToPrettyString(encoded));
-                    txtInfo.Text += $" - ({e.IpPort}) zakodowana wiadomoœæ: {Helpers.boolArrayToPrettyString(encoded)}{Environment.NewLine}";
+                    server.Send(e.IpPort, Helpers.ConvertBoolArrayToString(encoded));
+                    txtInfo.Text += $" - ({e.IpPort}) zakodowana wiadomoœæ: {Helpers.ConvertBoolArrayToString(encoded)}{Environment.NewLine}";
                 }
             });
         }
@@ -90,40 +90,40 @@ namespace TCPServer
 
                         if (it.Equals("#1"))
                         {
-                            message = Helpers.boolArrayToPrettyString(encoded);
+                            message = Helpers.ConvertBoolArrayToString(encoded);
                         }
                         if (it.Equals("#2"))
                         {
                             var errorPosition = rnd.Next(3, 22);
-                            while (Helpers.isPowerOfTwo(errorPosition))
+                            while (Helpers.IsPowerOfTwo(errorPosition))
                             {
                                 errorPosition = rnd.Next(3, 22);
                             }
-                            var code = Helpers.prettyStringToBoolArray(SONB.Helpers.codeString);
+                            var code = Helpers.ConvertStringToBoolArray(SONB.Helpers.codeString);
                             var encodedError = Hamming.Encode(code);
-                            txtInfo.Text += $" - ({ipPort})  zakodowana wiadomoœæ: {Helpers.boolArrayToPrettyString(encoded)}{Environment.NewLine}";
+                            txtInfo.Text += $" - ({ipPort})  zakodowana wiadomoœæ: {Helpers.ConvertBoolArrayToString(encoded)}{Environment.NewLine}";
                             SONB.Hamming.MixinSingleError(encodedError, errorPosition);
-                            txtInfo.Text += ($" - ({ipPort}) wiadomoœæ z b³êdem:   {Helpers.boolArrayToPrettyString(encodedError)} ({errorPosition}){Environment.NewLine}");
-                            message = Helpers.boolArrayToPrettyString(encodedError);
+                            txtInfo.Text += ($" - ({ipPort}) wiadomoœæ z b³êdem:   {Helpers.ConvertBoolArrayToString(encodedError)} ({errorPosition}){Environment.NewLine}");
+                            message = Helpers.ConvertBoolArrayToString(encodedError);
                         }
                         if (it.Equals("#3"))
                         {
                             var errorPosition = rnd.Next(3, 22);
                             var errorPosition2 = rnd.Next(3, 22);
-                            while (Helpers.isPowerOfTwo(errorPosition))
+                            while (Helpers.IsPowerOfTwo(errorPosition))
                             {
                                 errorPosition = rnd.Next(3, 22);
                             }
-                            while (errorPosition == errorPosition2 || (Helpers.isPowerOfTwo(errorPosition2)))
+                            while (errorPosition == errorPosition2 || (Helpers.IsPowerOfTwo(errorPosition2)))
                             {
                                 errorPosition2 = rnd.Next(3, 22);
                             }
-                            var code = Helpers.prettyStringToBoolArray(SONB.Helpers.codeString);
+                            var code = Helpers.ConvertStringToBoolArray(SONB.Helpers.codeString);
                             var encodedError = Hamming.Encode(code);
-                            txtInfo.Text += $" - ({ipPort})  zakodowana wiadomoœæ: {Helpers.boolArrayToPrettyString(encoded)}{Environment.NewLine}";
+                            txtInfo.Text += $" - ({ipPort})  zakodowana wiadomoœæ: {Helpers.ConvertBoolArrayToString(encoded)}{Environment.NewLine}";
                             SONB.Hamming.MixinDoubleError(encodedError, errorPosition, errorPosition2);
-                            txtInfo.Text += ($" - ({ipPort})  wiadomoœæ z b³êdem na 2 bitach:   {Helpers.boolArrayToPrettyString(encodedError)} ({errorPosition})({errorPosition2}){Environment.NewLine}");
-                            message = Helpers.boolArrayToPrettyString(encodedError);
+                            txtInfo.Text += ($" - ({ipPort})  wiadomoœæ z b³êdem na 2 bitach:   {Helpers.ConvertBoolArrayToString(encodedError)} ({errorPosition})({errorPosition2}){Environment.NewLine}");
+                            message = Helpers.ConvertBoolArrayToString(encodedError);
                         }
                         if (it.Equals("#4"))
                         {
@@ -168,40 +168,40 @@ namespace TCPServer
 
                         if (it.Equals("#1"))
                         {
-                            message = Helpers.boolArrayToPrettyString(encoded);
+                            message = Helpers.ConvertBoolArrayToString(encoded);
                         }
                         if (it.Equals("#2"))
                         {
                             var errorPosition = rnd.Next(3, 22);
-                            while (Helpers.isPowerOfTwo(errorPosition))
+                            while (Helpers.IsPowerOfTwo(errorPosition))
                             {
                                 errorPosition = rnd.Next(3, 22);
                             }
-                            var code = Helpers.prettyStringToBoolArray(SONB.Helpers.codeString);
+                            var code = Helpers.ConvertStringToBoolArray(SONB.Helpers.codeString);
                             var encodedError = Hamming.Encode(code);
-                            txtInfo.Text += $" - ({ipPort})  zakodowana wiadomoœæ: {Helpers.boolArrayToPrettyString(encoded)}{Environment.NewLine}";
+                            txtInfo.Text += $" - ({ipPort})  zakodowana wiadomoœæ: {Helpers.ConvertBoolArrayToString(encoded)}{Environment.NewLine}";
                             SONB.Hamming.MixinSingleError(encodedError, errorPosition);
-                            txtInfo.Text += ($" - ({ipPort}) wiadomoœæ z b³êdem:   {Helpers.boolArrayToPrettyString(encodedError)} ({errorPosition}){Environment.NewLine}");
-                            message = Helpers.boolArrayToPrettyString(encodedError);
+                            txtInfo.Text += ($" - ({ipPort}) wiadomoœæ z b³êdem:   {Helpers.ConvertBoolArrayToString(encodedError)} ({errorPosition}){Environment.NewLine}");
+                            message = Helpers.ConvertBoolArrayToString(encodedError);
                         }
                         if (it.Equals("#3"))
                         {
                             var errorPosition = rnd.Next(3, 22);
                             var errorPosition2 = rnd.Next(3, 22);
-                            while (Helpers.isPowerOfTwo(errorPosition))
+                            while (Helpers.IsPowerOfTwo(errorPosition))
                             {
                                 errorPosition = rnd.Next(3, 22);
                             }
-                            while (errorPosition == errorPosition2 || (Helpers.isPowerOfTwo(errorPosition2)))
+                            while (errorPosition == errorPosition2 || (Helpers.IsPowerOfTwo(errorPosition2)))
                             {
                                 errorPosition2 = rnd.Next(3, 22);
                             }
-                            var code = Helpers.prettyStringToBoolArray(SONB.Helpers.codeString);
+                            var code = Helpers.ConvertStringToBoolArray(SONB.Helpers.codeString);
                             var encodedError = Hamming.Encode(code);
-                            txtInfo.Text += $" - ({ipPort})  zakodowana wiadomoœæ: {Helpers.boolArrayToPrettyString(encoded)}{Environment.NewLine}";
+                            txtInfo.Text += $" - ({ipPort})  zakodowana wiadomoœæ: {Helpers.ConvertBoolArrayToString(encoded)}{Environment.NewLine}";
                             SONB.Hamming.MixinDoubleError(encodedError, errorPosition, errorPosition2);
-                            txtInfo.Text += ($" - ({ipPort})  wiadomoœæ z b³êdem na 2 bitach:   {Helpers.boolArrayToPrettyString(encodedError)} ({errorPosition})({errorPosition2}){Environment.NewLine}");
-                            message = Helpers.boolArrayToPrettyString(encodedError);
+                            txtInfo.Text += ($" - ({ipPort})  wiadomoœæ z b³êdem na 2 bitach:   {Helpers.ConvertBoolArrayToString(encodedError)} ({errorPosition})({errorPosition2}){Environment.NewLine}");
+                            message = Helpers.ConvertBoolArrayToString(encodedError);
                         }
                         if (it.Equals("#4"))
                         {

@@ -5,36 +5,36 @@ namespace SONB
     public class Helpers
     {
         public static readonly string codeString = "1011001010110010";
-        public static string boolArrayToPrettyString(bool[] arr)
+        public static string ConvertBoolArrayToString(bool[] arr)
         {
             return string.Join("", arr.Select(x => Convert.ToInt32(x)));
         }
 
-        public static bool[] prettyStringToBoolArray(string s)
+        public static bool[] ConvertStringToBoolArray(string s)
         {
             return s.Select(x => x == '1').ToArray();
         }
 
-        public static bool notPowerOf2(int x)
+        public static bool IsNotPowerOf2(int x)
         {
             return !(x == 1 || x == 2 || x == 4 || x == 8 || x == 16);
         }
 
-        public static int[] getPositionsForXoring(int length, int currentHammingPosition)
+        public static int[] GetPositionsForXoring(int length, int currentHammingPosition)
         {
             var positions = new List<int>();
             for (int i = 1; i <= length; i++)
             {
-                if ((i & currentHammingPosition) > 0 && notPowerOf2(i))
+                if ((i & currentHammingPosition) > 0 && IsNotPowerOf2(i))
                     positions.Add(i);
 
             }
             return positions.ToArray();
         }
 
-        public static bool doXoringForPosition(bool[] vector, int length, int currentHammingPosition)
+        public static bool DoXoringForPosition(bool[] vector, int length, int currentHammingPosition)
         {
-            return getPositionsForXoring(length, currentHammingPosition)
+            return GetPositionsForXoring(length, currentHammingPosition)
                 .Select(x => vector[x - 1])
                 .Aggregate((x, y) => x ^ y);
         }
@@ -46,17 +46,16 @@ namespace SONB
 
         public static bool[] GetEncodedCodeToSend(string codeString)
         {
-            var code = prettyStringToBoolArray(codeString);
+            var code = ConvertStringToBoolArray(codeString);
             var encoded = Hamming.Encode(code);
 
-            Console.WriteLine($"Serwer nadzorujacy - Wiadomość do zakodowania: {boolArrayToPrettyString(code)}");
-            Console.WriteLine($"Serwer nadzorujacy - Zakodowana wiadomość: {boolArrayToPrettyString(encoded)}\n");
+            Console.WriteLine($"Serwer nadzorujacy - Wiadomość do zakodowania: {ConvertBoolArrayToString(code)}");
+            Console.WriteLine($"Serwer nadzorujacy - Zakodowana wiadomość: {ConvertBoolArrayToString(encoded)}\n");
 
             return encoded;
         }
-        public static bool isPowerOfTwo(int n)
+        public static bool IsPowerOfTwo(int n)
         {
-
             if (n == 0)
                 return false;
 
