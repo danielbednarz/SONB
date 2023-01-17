@@ -76,7 +76,7 @@ namespace TCPClient
                 var message = Encoding.UTF8.GetString(e.Data);
                 txtInfo.Text += $"{e.IpPort} Otrzymano zakodowan¹ wiadomoœæ: {message}{Environment.NewLine}";
 
-                var encoded = Helpers.prettyStringToBoolArray(message);
+                var encoded = Helpers.ConvertStringToBoolArray(message);
                 int calculatedErrorPosition = Hamming.ErrorSyndrome(encoded);
                 if (calculatedErrorPosition != 0)
                 {
@@ -86,12 +86,12 @@ namespace TCPClient
                 }
 
                 var decoded = Hamming.Decode(encoded);
-                txtInfo.Text += $" - Wiadomoœæ po odkodowaniu: {Helpers.boolArrayToPrettyString(decoded)}{Environment.NewLine}";
-                if (!Enumerable.SequenceEqual(Helpers.prettyStringToBoolArray(Helpers.codeString), decoded))
+                txtInfo.Text += $" - Wiadomoœæ po odkodowaniu: {Helpers.ConvertBoolArrayToString(decoded)}{Environment.NewLine}";
+                if (!Enumerable.SequenceEqual(Helpers.ConvertStringToBoolArray(Helpers.codeString), decoded))
                 {
                     client.Send(port.ToString());
                 }
-                txtInfo.Text += Enumerable.SequenceEqual(Helpers.prettyStringToBoolArray(Helpers.codeString), decoded) ? $"{Thread.CurrentThread.Name} - Wiadomoœci s¹ takie same!{Environment.NewLine}" : $"{Thread.CurrentThread.Name} ! B³¹d wiadomoœci s¹ ró¿ne, proszê serwer o nades³anie poprawnej wiadomoœci!{Environment.NewLine}";
+                txtInfo.Text += Enumerable.SequenceEqual(Helpers.ConvertStringToBoolArray(Helpers.codeString), decoded) ? $"{Thread.CurrentThread.Name} - Wiadomoœci s¹ takie same!{Environment.NewLine}" : $"{Thread.CurrentThread.Name} ! B³¹d wiadomoœci s¹ ró¿ne, proszê serwer o nades³anie poprawnej wiadomoœci!{Environment.NewLine}";
             });
         }
 

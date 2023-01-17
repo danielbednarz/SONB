@@ -20,21 +20,21 @@ namespace SONB
                 case "1":
                     Server.StartMasterServer(collection, ExceptionType.NoException);
                     return true;
-                case "2":
-                    Server.StartMasterServer(collection, ExceptionType.IncorrectMessage);
-                    return true;
-                case "3":
-                    Server.StartMasterServer(collection, ExceptionType.EmptyMessage);
-                    return true;
-                case "4":
-                    Server.StartMasterServer(collection, ExceptionType.NullMessage);
-                    return true;
-                case "5":
-                    Server.StartMasterServer(collection, ExceptionType.IncorrectMessageTwoBit);
-                    return true;
-                case "6":
-                    Server.StartMasterServer(collection, ExceptionType.IncorrectMessageNotHamming);
-                    return true;
+                //case "2":
+                //    Server.StartMasterServer(collection, ExceptionType.IncorrectMessage);
+                //    return true;
+                //case "3":
+                //    Server.StartMasterServer(collection, ExceptionType.EmptyMessage);
+                //    return true;
+                //case "4":
+                //    Server.StartMasterServer(collection, ExceptionType.NullMessage);
+                //    return true;
+                //case "5":
+                //    Server.StartMasterServer(collection, ExceptionType.IncorrectMessageTwoBit);
+                //    return true;
+                //case "6":
+                //    Server.StartMasterServer(collection, ExceptionType.IncorrectMessageNotHamming);
+                //    return true;
                 case "0":
                     return false;
                 default:
