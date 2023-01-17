@@ -1,6 +1,5 @@
 using SONB;
 using SuperSimpleTcp;
-using System;
 using System.Text;
 
 namespace TCPServer
@@ -54,8 +53,8 @@ namespace TCPServer
         {
             this.Invoke((MethodInvoker)delegate
             {
-                txtInfo.Text += $" ###{e.IpPort} po³¹czono ###{Environment.NewLine}";
-                lstClientIP.Items.Add(e.IpPort+" - poprawna #1");
+                txtInfo.Text += $" ### {e.IpPort} po³¹czono ###{Environment.NewLine}";
+                lstClientIP.Items.Add(e.IpPort + " - poprawna #1");
             });
         }
 
@@ -76,64 +75,37 @@ namespace TCPServer
                 {
                     foreach (var item in lstClientIP.SelectedItems)
                     {
-
-                        String ipPort = "";
-                        String message = " ";
+                        string ipPort = "";
+                        string message = " ";
                         int index = item.ToString().IndexOf("-");
-                        String it = item.ToString().Substring(item.ToString().Length - 2);
+                        int problemTypeChoice = int.Parse(item.ToString().Substring(item.ToString().Length - 1));
                         if (index >= 0)
                             ipPort = item.ToString().Substring(0, index - 1);
 
-                        txtInfo.Text += $" - ({ipPort}) wiadomoœæ do zakodowania: {SONB.Helpers.codeString}{Environment.NewLine}";
-                        var encoded = SONB.Helpers.GetEncodedCodeToSend(SONB.Helpers.codeString);
+                        txtInfo.Text += $" - ({ipPort}) wiadomoœæ do zakodowania: {Helpers.codeString}{Environment.NewLine}";
+                        var encoded = Helpers.GetEncodedCodeToSend(Helpers.codeString);
 
-
-                        if (it.Equals("#1"))
+                        if (problemTypeChoice == (int)ExceptionType.NoException)
                         {
                             message = Helpers.ConvertBoolArrayToString(encoded);
                         }
-                        if (it.Equals("#2"))
+                        if (problemTypeChoice == (int)ExceptionType.OneBit)
                         {
-                            var errorPosition = rnd.Next(3, 22);
-                            while (Helpers.IsPowerOfTwo(errorPosition))
-                            {
-                                errorPosition = rnd.Next(3, 22);
-                            }
-                            var code = Helpers.ConvertStringToBoolArray(SONB.Helpers.codeString);
-                            var encodedError = Hamming.Encode(code);
-                            txtInfo.Text += $" - ({ipPort})  zakodowana wiadomoœæ: {Helpers.ConvertBoolArrayToString(encoded)}{Environment.NewLine}";
-                            SONB.Hamming.MixinSingleError(encodedError, errorPosition);
-                            txtInfo.Text += ($" - ({ipPort}) wiadomoœæ z b³êdem:   {Helpers.ConvertBoolArrayToString(encodedError)} ({errorPosition}){Environment.NewLine}");
-                            message = Helpers.ConvertBoolArrayToString(encodedError);
+                            message = ExceptionFactory.CreateOneBitErrorMessage(txtInfo, ipPort, encoded);
                         }
-                        if (it.Equals("#3"))
+                        if (problemTypeChoice == (int)ExceptionType.TwoBit)
                         {
-                            var errorPosition = rnd.Next(3, 22);
-                            var errorPosition2 = rnd.Next(3, 22);
-                            while (Helpers.IsPowerOfTwo(errorPosition))
-                            {
-                                errorPosition = rnd.Next(3, 22);
-                            }
-                            while (errorPosition == errorPosition2 || (Helpers.IsPowerOfTwo(errorPosition2)))
-                            {
-                                errorPosition2 = rnd.Next(3, 22);
-                            }
-                            var code = Helpers.ConvertStringToBoolArray(SONB.Helpers.codeString);
-                            var encodedError = Hamming.Encode(code);
-                            txtInfo.Text += $" - ({ipPort})  zakodowana wiadomoœæ: {Helpers.ConvertBoolArrayToString(encoded)}{Environment.NewLine}";
-                            SONB.Hamming.MixinDoubleError(encodedError, errorPosition, errorPosition2);
-                            txtInfo.Text += ($" - ({ipPort})  wiadomoœæ z b³êdem na 2 bitach:   {Helpers.ConvertBoolArrayToString(encodedError)} ({errorPosition})({errorPosition2}){Environment.NewLine}");
-                            message = Helpers.ConvertBoolArrayToString(encodedError);
+                            message = ExceptionFactory.CreateTwoBitErrorMessage(txtInfo, ipPort, encoded);
                         }
-                        if (it.Equals("#4"))
+                        if (problemTypeChoice == (int)ExceptionType.EmptyMessage)
                         {
                             message = " ";
                         }
-                        if (it.Equals("#5"))
+                        if (problemTypeChoice == (int)ExceptionType.NotHammingMessage)
                         {
-                            message = SONB.Helpers.codeString;
+                            message = Helpers.GetRandomErrorMessage();
+                            txtInfo.Text += $" - ({ipPort}) wiadomoœæ, która nie jest z kodem Hamminga: {message}{Environment.NewLine}";
                         }
-                 
 
                         server.Send(ipPort, message);
                         txtInfo.Text += $" - ({ipPort}) zostanie wys³ana wiadomoœæ: {message}{Environment.NewLine}";
@@ -154,64 +126,37 @@ namespace TCPServer
                 {
                     foreach (var item in lstClientIP.Items)
                     {
-
-                        String ipPort = "";
-                        String message = " ";
+                        string ipPort = "";
+                        string message = " ";
                         int index = item.ToString().IndexOf("-");
-                        String it = item.ToString().Substring(item.ToString().Length - 2);
+                        int problemTypeChoice = int.Parse(item.ToString().Substring(item.ToString().Length - 1));
                         if (index >= 0)
                             ipPort = item.ToString().Substring(0, index - 1);
 
-                        txtInfo.Text += $" - ({ipPort}) wiadomoœæ do zakodowania: {SONB.Helpers.codeString}{Environment.NewLine}";
-                        var encoded = SONB.Helpers.GetEncodedCodeToSend(SONB.Helpers.codeString);
+                        txtInfo.Text += $" - ({ipPort}) wiadomoœæ do zakodowania: {Helpers.codeString}{Environment.NewLine}";
+                        var encoded = Helpers.GetEncodedCodeToSend(Helpers.codeString);
 
-
-                        if (it.Equals("#1"))
+                        if (problemTypeChoice == (int)ExceptionType.NoException)
                         {
                             message = Helpers.ConvertBoolArrayToString(encoded);
                         }
-                        if (it.Equals("#2"))
+                        if (problemTypeChoice == (int)ExceptionType.OneBit)
                         {
-                            var errorPosition = rnd.Next(3, 22);
-                            while (Helpers.IsPowerOfTwo(errorPosition))
-                            {
-                                errorPosition = rnd.Next(3, 22);
-                            }
-                            var code = Helpers.ConvertStringToBoolArray(SONB.Helpers.codeString);
-                            var encodedError = Hamming.Encode(code);
-                            txtInfo.Text += $" - ({ipPort})  zakodowana wiadomoœæ: {Helpers.ConvertBoolArrayToString(encoded)}{Environment.NewLine}";
-                            SONB.Hamming.MixinSingleError(encodedError, errorPosition);
-                            txtInfo.Text += ($" - ({ipPort}) wiadomoœæ z b³êdem:   {Helpers.ConvertBoolArrayToString(encodedError)} ({errorPosition}){Environment.NewLine}");
-                            message = Helpers.ConvertBoolArrayToString(encodedError);
+                            message = ExceptionFactory.CreateOneBitErrorMessage(txtInfo, ipPort, encoded);
                         }
-                        if (it.Equals("#3"))
+                        if (problemTypeChoice == (int)ExceptionType.TwoBit)
                         {
-                            var errorPosition = rnd.Next(3, 22);
-                            var errorPosition2 = rnd.Next(3, 22);
-                            while (Helpers.IsPowerOfTwo(errorPosition))
-                            {
-                                errorPosition = rnd.Next(3, 22);
-                            }
-                            while (errorPosition == errorPosition2 || (Helpers.IsPowerOfTwo(errorPosition2)))
-                            {
-                                errorPosition2 = rnd.Next(3, 22);
-                            }
-                            var code = Helpers.ConvertStringToBoolArray(SONB.Helpers.codeString);
-                            var encodedError = Hamming.Encode(code);
-                            txtInfo.Text += $" - ({ipPort})  zakodowana wiadomoœæ: {Helpers.ConvertBoolArrayToString(encoded)}{Environment.NewLine}";
-                            SONB.Hamming.MixinDoubleError(encodedError, errorPosition, errorPosition2);
-                            txtInfo.Text += ($" - ({ipPort})  wiadomoœæ z b³êdem na 2 bitach:   {Helpers.ConvertBoolArrayToString(encodedError)} ({errorPosition})({errorPosition2}){Environment.NewLine}");
-                            message = Helpers.ConvertBoolArrayToString(encodedError);
+                            message = ExceptionFactory.CreateTwoBitErrorMessage(txtInfo, ipPort, encoded);
                         }
-                        if (it.Equals("#4"))
+                        if (problemTypeChoice == (int)ExceptionType.EmptyMessage)
                         {
                             message = " ";
                         }
-                        if (it.Equals("#5"))
+                        if (problemTypeChoice == (int)ExceptionType.NotHammingMessage)
                         {
-                            message = SONB.Helpers.codeString;
+                            message = Helpers.GetRandomErrorMessage();
+                            txtInfo.Text += $" - ({ipPort}) wiadomoœæ, która nie jest z kodem Hamminga: {message}{Environment.NewLine}";
                         }
-
 
                         server.Send(ipPort, message);
                         txtInfo.Text += $" - ({ipPort}) zostanie wys³ana wiadomoœæ: {message}{Environment.NewLine}";
@@ -230,15 +175,15 @@ namespace TCPServer
         {
             if (lstClientIP.SelectedItem != null)
             {
-                String text ="";
+                string text = "";
                 int index = lstClientIP.SelectedItem.ToString().IndexOf("-");
                 if (index >= 0)
-                    text = lstClientIP.Text.Substring(0, index-1);
+                    text = lstClientIP.Text.Substring(0, index - 1);
                 else
                     return;
                 lstClientIP.Items.Remove(lstClientIP.SelectedItem.ToString());
                 lstClientIP.Items.Add(text + " - poprawna #1");
-                
+
             }
             else
             {
@@ -250,10 +195,10 @@ namespace TCPServer
         {
             if (lstClientIP.SelectedItem != null)
             {
-                String text = "";
+                string text = "";
                 int index = lstClientIP.SelectedItem.ToString().IndexOf("-");
                 if (index >= 0)
-                    text = lstClientIP.Text.Substring(0, index-1);
+                    text = lstClientIP.Text.Substring(0, index - 1);
                 else
                     return;
                 lstClientIP.Items.Remove(lstClientIP.SelectedItem.ToString());
@@ -270,10 +215,10 @@ namespace TCPServer
         {
             if (lstClientIP.SelectedItem != null)
             {
-                String text = "";
+                string text = "";
                 int index = lstClientIP.SelectedItem.ToString().IndexOf("-");
                 if (index >= 0)
-                    text = lstClientIP.Text.Substring(0, index-1);
+                    text = lstClientIP.Text.Substring(0, index - 1);
                 else
                     return;
                 lstClientIP.Items.Remove(lstClientIP.SelectedItem.ToString());
@@ -290,7 +235,7 @@ namespace TCPServer
         {
             if (lstClientIP.SelectedItem != null)
             {
-                String text = "";
+                string text = "";
                 int index = lstClientIP.SelectedItem.ToString().IndexOf("-");
                 if (index >= 0)
                     text = lstClientIP.Text.Substring(0, index - 1);
@@ -310,10 +255,10 @@ namespace TCPServer
         {
             if (lstClientIP.SelectedItem != null)
             {
-                String text = "";
+                string text = "";
                 int index = lstClientIP.SelectedItem.ToString().IndexOf("-");
                 if (index >= 0)
-                    text = lstClientIP.Text.Substring(0, index-1);
+                    text = lstClientIP.Text.Substring(0, index - 1);
                 else
                     return;
                 lstClientIP.Items.Remove(lstClientIP.SelectedItem.ToString());

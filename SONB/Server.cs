@@ -20,20 +20,20 @@ namespace SONB
                 case ExceptionType.NoException:
                     SendCorrectMessageToAllServer(collection);
                     break;
-                case ExceptionType.IncorrectMessage:
-                    SendErrorMessageToRandomServer(collection);
-                    break;
-                case ExceptionType.IncorrectMessageTwoBit:
-                    SendErrorMessagetwoBitToRandomServer(collection);
-                    break;
-                case ExceptionType.IncorrectMessageNotHamming:
-                    SendErrorMessageNotHammingToRandomServer(collection);
-                    break;
-                case ExceptionType.EmptyMessage:
-                    AddMissingMessage(collection);
-                    break;
-                case ExceptionType.NullMessage:
-                    AddNullMessage(collection);
+                //case ExceptionType.IncorrectMessage:
+                //    SendErrorMessageToRandomServer(collection);
+                //    break;
+                //case ExceptionType.IncorrectMessageTwoBit:
+                //    SendErrorMessagetwoBitToRandomServer(collection);
+                //    break;
+                //case ExceptionType.IncorrectMessageNotHamming:
+                //    SendErrorMessageNotHammingToRandomServer(collection);
+                //    break;
+                //case ExceptionType.EmptyMessage:
+                //    AddMissingMessage(collection);
+                //    break;
+                //case ExceptionType.NullMessage:
+                //    AddNullMessage(collection);
                     break;
                 default:
                     return;

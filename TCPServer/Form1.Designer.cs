@@ -41,6 +41,7 @@
             this.btnError2 = new System.Windows.Forms.Button();
             this.btnEmpty = new System.Windows.Forms.Button();
             this.btnNotHamming = new System.Windows.Forms.Button();
+            this.MessageTypeLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -48,13 +49,13 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(26, 21);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(42, 15);
+            this.label1.Size = new System.Drawing.Size(45, 15);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Server:";
+            this.label1.Text = "Serwer:";
             // 
             // btnStart
             // 
-            this.btnStart.Location = new System.Drawing.Point(262, 495);
+            this.btnStart.Location = new System.Drawing.Point(312, 18);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(75, 23);
             this.btnStart.TabIndex = 2;
@@ -66,7 +67,7 @@
             // 
             this.txtIP.Location = new System.Drawing.Point(74, 18);
             this.txtIP.Name = "txtIP";
-            this.txtIP.Size = new System.Drawing.Size(486, 23);
+            this.txtIP.Size = new System.Drawing.Size(220, 23);
             this.txtIP.TabIndex = 1;
             this.txtIP.Text = "127.0.0.1:9000";
             // 
@@ -82,11 +83,11 @@
             // 
             // btnSend
             // 
-            this.btnSend.Location = new System.Drawing.Point(219, 553);
+            this.btnSend.Location = new System.Drawing.Point(188, 553);
             this.btnSend.Name = "btnSend";
-            this.btnSend.Size = new System.Drawing.Size(75, 23);
+            this.btnSend.Size = new System.Drawing.Size(106, 23);
             this.btnSend.TabIndex = 6;
-            this.btnSend.Text = "Send";
+            this.btnSend.Text = "Wyślij";
             this.btnSend.UseVisualStyleBackColor = true;
             this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
             // 
@@ -105,75 +106,85 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(566, 21);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(54, 15);
+            this.label3.Size = new System.Drawing.Size(53, 15);
             this.label3.TabIndex = 8;
-            this.label3.Text = "Client IP:";
+            this.label3.Text = "Klient IP:";
             // 
             // btnSendAll
             // 
-            this.btnSendAll.Location = new System.Drawing.Point(300, 553);
+            this.btnSendAll.Location = new System.Drawing.Point(312, 553);
             this.btnSendAll.Name = "btnSendAll";
-            this.btnSendAll.Size = new System.Drawing.Size(75, 23);
+            this.btnSendAll.Size = new System.Drawing.Size(108, 23);
             this.btnSendAll.TabIndex = 10;
-            this.btnSendAll.Text = "SendAll";
+            this.btnSendAll.Text = "Wyślij wszystkim";
             this.btnSendAll.UseVisualStyleBackColor = true;
             this.btnSendAll.Click += new System.EventHandler(this.btnSendAll_Click);
             // 
             // btnCorrect
             // 
-            this.btnCorrect.Location = new System.Drawing.Point(100, 524);
+            this.btnCorrect.Location = new System.Drawing.Point(74, 510);
             this.btnCorrect.Name = "btnCorrect";
-            this.btnCorrect.Size = new System.Drawing.Size(75, 23);
+            this.btnCorrect.Size = new System.Drawing.Size(91, 23);
             this.btnCorrect.TabIndex = 11;
-            this.btnCorrect.Text = "Correct";
+            this.btnCorrect.Text = "Prawidłowa";
             this.btnCorrect.UseVisualStyleBackColor = true;
             this.btnCorrect.Click += new System.EventHandler(this.btnCorrect_Click);
             // 
             // btnError1
             // 
-            this.btnError1.Location = new System.Drawing.Point(181, 524);
+            this.btnError1.Location = new System.Drawing.Point(171, 510);
             this.btnError1.Name = "btnError1";
-            this.btnError1.Size = new System.Drawing.Size(75, 23);
+            this.btnError1.Size = new System.Drawing.Size(91, 23);
             this.btnError1.TabIndex = 12;
-            this.btnError1.Text = "Error 1 bit";
+            this.btnError1.Text = "Błąd 1 bit";
             this.btnError1.UseVisualStyleBackColor = true;
             this.btnError1.Click += new System.EventHandler(this.btnError1_Click);
             // 
             // btnError2
             // 
-            this.btnError2.Location = new System.Drawing.Point(262, 524);
+            this.btnError2.Location = new System.Drawing.Point(268, 510);
             this.btnError2.Name = "btnError2";
-            this.btnError2.Size = new System.Drawing.Size(75, 23);
+            this.btnError2.Size = new System.Drawing.Size(92, 23);
             this.btnError2.TabIndex = 13;
-            this.btnError2.Text = "Error 2 bit";
+            this.btnError2.Text = "Błąd 2 bity";
             this.btnError2.UseVisualStyleBackColor = true;
             this.btnError2.Click += new System.EventHandler(this.btnError2_Click);
             // 
             // btnEmpty
             // 
-            this.btnEmpty.Location = new System.Drawing.Point(343, 523);
+            this.btnEmpty.Location = new System.Drawing.Point(366, 510);
             this.btnEmpty.Name = "btnEmpty";
-            this.btnEmpty.Size = new System.Drawing.Size(75, 23);
+            this.btnEmpty.Size = new System.Drawing.Size(94, 23);
             this.btnEmpty.TabIndex = 15;
-            this.btnEmpty.Text = "Empty";
+            this.btnEmpty.Text = "Pusta";
             this.btnEmpty.UseVisualStyleBackColor = true;
             this.btnEmpty.Click += new System.EventHandler(this.btnEmpty_Click);
             // 
             // btnNotHamming
             // 
-            this.btnNotHamming.Location = new System.Drawing.Point(424, 524);
+            this.btnNotHamming.Location = new System.Drawing.Point(466, 510);
             this.btnNotHamming.Name = "btnNotHamming";
             this.btnNotHamming.Size = new System.Drawing.Size(94, 23);
             this.btnNotHamming.TabIndex = 16;
-            this.btnNotHamming.Text = "NotHamming";
+            this.btnNotHamming.Text = "Nie-Hamming";
             this.btnNotHamming.UseVisualStyleBackColor = true;
             this.btnNotHamming.Click += new System.EventHandler(this.btnNotHamming_Click);
+            // 
+            // MessageTypeLabel
+            // 
+            this.MessageTypeLabel.AutoSize = true;
+            this.MessageTypeLabel.Location = new System.Drawing.Point(74, 492);
+            this.MessageTypeLabel.Name = "MessageTypeLabel";
+            this.MessageTypeLabel.Size = new System.Drawing.Size(95, 15);
+            this.MessageTypeLabel.TabIndex = 17;
+            this.MessageTypeLabel.Text = "Typ wiadomości:";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(845, 586);
+            this.Controls.Add(this.MessageTypeLabel);
             this.Controls.Add(this.btnNotHamming);
             this.Controls.Add(this.btnEmpty);
             this.Controls.Add(this.btnError2);
@@ -212,5 +223,6 @@
         private Button btnError2;
         private Button btnEmpty;
         private Button btnNotHamming;
+        private Label MessageTypeLabel;
     }
 }

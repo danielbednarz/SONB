@@ -1,4 +1,5 @@
 ﻿using System.Collections.Concurrent;
+using System.Text;
 
 namespace SONB
 {
@@ -63,6 +64,21 @@ namespace SONB
             (Math.Log(n) / Math.Log(2))))
             == (int)(Math.Floor(
             ((Math.Log(n) / Math.Log(2)))));
+        }
+
+        public static string GetRandomErrorMessage()
+        {
+            Random rnd = new();
+
+            int length = rnd.Next(rnd.Next(2, 21));
+            StringBuilder sb = new();
+
+            for (int i = 0; i < length; i++)
+            {
+                sb.Append(rnd.Next(0, 2));
+            }
+
+            return sb.ToString();
         }
 
     }

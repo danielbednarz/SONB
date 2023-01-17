@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SONB
+﻿namespace SONB
 {
     public enum ExceptionType
     {
-        NoException,
-        IncorrectMessage,
-        IncorrectMessageTwoBit,
-        IncorrectMessageNotHamming,
-        EmptyMessage,
-        NullMessage
+        NoException = 1,
+        OneBit = 2,
+        TwoBit = 3,
+        EmptyMessage = 4,
+        NotHammingMessage = 5
     }
 }
