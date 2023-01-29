@@ -42,7 +42,7 @@ namespace TCPServer
             var encodedError = Hamming.Encode(code);
             txtInfo.Text += $" - ({ipPort})  zakodowana wiadomość: {Helpers.ConvertBoolArrayToString(encodedMessage)}{Environment.NewLine}";
             Hamming.MixinDoubleError(encodedError, errorPosition, errorPosition2);
-            txtInfo.Text += ($" - ({ipPort})  wiadomość z błędem na 2 bitach: {Helpers.ConvertBoolArrayToString(encodedError)} ({errorPosition})({errorPosition2}){Environment.NewLine}");
+            txtInfo.Text += ($" - ({ipPort})  wiadomość z błędem na 2 bitach: {Helpers.ConvertBoolArrayToString(encodedError)}{Environment.NewLine}");
             
             string message = Helpers.ConvertBoolArrayToString(encodedError);
 
